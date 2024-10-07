@@ -1,8 +1,3 @@
-<?php
-$cookie_name=$_POST["vName"];
-$cookie_subject=$_POST["opcion"]["name"];
-setcookie($cookie_name,$cookie_subject,time() + (86400 * 30), "/" )
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

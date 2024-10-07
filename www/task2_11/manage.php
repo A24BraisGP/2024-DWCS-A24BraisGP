@@ -1,25 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <?php
-$selectedOption ="";
- if ($_SERVER["REQUEST_METHOD"] == "POST"){
-
-    $dataSelect = array(
+<?php
+  $dataSelect = array(
       "Java Programming",
       "Web design",
       "Docker administration",
       "Django framework", 
       "Mongo database"
     );
-    if(empty($_POST["vName"])){
+$selectedOption ="";
+ if ($_SERVER["REQUEST_METHOD"] == "POST"){
+   $cookie_subject=$dataSelect[$_POST["opcion"]];
+   $cookie_name=$_POST["vName"];
+   setcookie($cookie_name,$cookie_subject,time() + (86400 * 30), "/" );
+    if(empty($_COOKIE[$cookie_name])){
       echo "<h1>COMEBACK AND WRITE A NAME</h1>";
     }else{
-    $name = test_input($_POST["vName"]);
-    $dataSubject = test_input($dataSelect[$_POST["opcion"]]);
+    $name = test_input($cookie_name);
+    $dataSubject = test_input($cookie_subject);
      if(empty($selectedOption)){
       echo "$name"." wants to enroll in the following subject: ".$dataSubject;
     }elseif(!empty($selectedOption)){
@@ -38,19 +34,38 @@ $selectedOption ="";
         }
 
     if ($_SERVER["REQUEST_METHOD"] == "GET"){
-      $name = test_input($_GET["vName"]);
-      $dataSubject = test_input($_GET["vSubject"]);
+      $cookie_subject=$dataSelect[$_POST["opcion"]];
+      $cookie_name=$_POST["vName"];
+      setcookie($cookie_name,$cookie_subject,time() + (86400 * 30), "/" );
+      $name = test_input($cookie_name);
+      $dataSubject = test_input($cookie_subject);
       $selectedOption = $_GET["classes"];
       if(empty($selectedOption)){
       echo "$name"." wants to enroll in the following subject: ".$dataSubject;
     }elseif(!empty($selectedOption)){
-      echo "$name"." wants to enroll in the following subject: ".$dataSubject. " in the ".$selectedOption. " format";
+      $cookie_n="selectedFormat";
+      $cookie_value=$selectedOption;
+      setcookie($cookie_n,$cookie_value,time() + (86400 * 30), "/" );
+      var_dump($_COOKIE[$cookie_value]);
+
+      echo "$name"." wants to enroll in the following subject: ".$dataSubject. " in the ".$_COOKIE[$cookie_value]. " format";
+      ?>
+       <a href="manage2.php?vName=<?php echo $name?>&vSubject=<?php echo $dataSubject ?>">Link to manage2.php</a>
+     <?php
     }
-    ?>
-     <a href="manage2.php?vName=<?php echo $name?>&vSubject=<?php echo $dataSubject ?>">Link to manage2.php</a>
-    <?php
-    }
-  ?>
+  }
+  
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  
+   
 </head>
 <body>
   
