@@ -1,27 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <?php 
-  function test_input($data) {
-	  $data = trim($data);
-	  $data = stripslashes($data);
-	  $data = htmlspecialchars($data);
-	  return $data;
-  }
-
-  $logErr=false;
-
-  function check_user($user,$password){
-    if($user === "Blath" && $password === "123"){
-      $clearLogin["name"]= "Blath";
-    } else return false;
-
-  }
-
-  if($_SERVER["REQUEST_METHOD"] == ["POST"]){
+<?php 
+  if($_SERVER["REQUEST_METHOD"] == "POST"){
+    $logErr=false;
+    $clearLogin = false;
     $user = test_input($_POST["user"]);
     $password = test_input($_POST["passw"]);
     $clearLogin= check_user($user,$password);
@@ -34,8 +14,36 @@
       header("Location: create_char.php");
     }
   }
+  function test_input($data) {
+	  $data = trim($data);
+	  $data = stripslashes($data);
+	  $data = htmlspecialchars($data);
+	  return $data;
+  }
+
+  
+
+  function check_user($user,$password){
+    if($user === "Blath" && $password === "123"){
+      $clearLogin['name']= "Blath";
+      return $clearLogin;
+    } else {
+    return false;
+    }
+
+
+  }
+  
+
 
   ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
 </head>
 <body>
   <?php 
