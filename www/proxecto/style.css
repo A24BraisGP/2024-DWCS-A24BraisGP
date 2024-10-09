@@ -1,43 +1,65 @@
+a {
+  text-decoration: none;
+  padding: 5%;
+}
+a:hover {
+  text-decoration: 1px blue dashed;
+  background-color: #eba837;
+  border-radius: 7px;
+}
 body {
   display: flex;
   flex-wrap: wrap;
-  border: 2px green solid;
+  border: 2px solid #63453f;
   border-radius: 7px;
   justify-content: space-between;
-}
-a {
-  text-decoration: none;
-}
-a:hover {
-  background-color: #c88119;
-  padding: 25px;
+  align-content: space-around;
+  align-self: center;
 }
 .logindiv {
-  display: flex;
   height: 25vh;
   width: 25vw;
-  align-items: center;
-  justify-content: center;
+  align-content: center;
+  text-align: center;
+  align-self: center;
 }
 .creatediv {
-  display: flex;
   height: 25vh;
   width: 25vw;
-  align-items: center;
-  justify-content: center;
+  align-content: center;
+  text-align: center;
+  align-self: center;
 }
 .rolldiv {
-  display: flex;
   height: 25vh;
   width: 25vw;
-  align-items: center;
-  justify-content: center;
+  align-content: center;
+  text-align: center;
+  align-self: center;
+}
+.logout > a:hover {
+  background-color: red;
 }
 .logout {
-  display: flex;
+  margin-left: 35vw;
   height: 25vh;
   width: 25vw;
-  align-items: center;
-  justify-content: center;
-  margin-left: 35vw;
+  align-content: center;
+  text-align: center;
+  align-self: center;
+}
+table > tr {
+  border: 2px black solid;
+}
+#formLeft {
+  border: 2px #eba837 solid;
+  border-radius: 7px;
+  height: 40vh;
+  width: 40vw;
+}
+#formRight {
+  border: 2px #63453f solid;
+  border-radius: 7px;
+  height: 40vh;
+  width: 40vw;
 }
