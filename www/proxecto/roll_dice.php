@@ -8,7 +8,8 @@
   echo "weapon: ".$_SESSION["weapon"]."<br>";
   echo "str: ".$_SESSION["strenght"];
   echo "defense: ".$_SESSION["defense"];
-  echo "evasion: ".$_SESSION["evasion"];
+  echo "evasion: ".$_SESSION["evasion"]."<br>";
+
   ?>
 <?php
 class Enemy{
@@ -18,7 +19,7 @@ class Enemy{
     public $eDefense;
     public $eEvasion;
 
-    public function _construct(){
+    public function __construct($eName = "", $eWeapon ="", $eStrength = 0, $eDefense = 0, $eEvasion = 0){
       $this->eName = $eName;
       $this->eWeapon = $eWeapon;
       $this->eStrength = $eStrength;
@@ -26,68 +27,124 @@ class Enemy{
       $this->eEvasion = $eEvasion;
     }
 
-    function get_eName(){
+    public function get_eName(){
       return $this->eName;
     }
-    function get_eWapon(){
+    public function get_eWeapon(){
       return $this->eWeapon;
     }
-    function get_eStrength(){
+    public function get_eStrength(){
       return $this->eStrength;
     }
-    function get_eDefense(){
+    public function get_eDefense(){
       return $this->eDefense;
     }
-    function get_eEvasion(){
+    public function get_eEvasion(){
       return $this->eEvasion;
     }
 
     public function __toString(){
-      return $this->eName;
+      return "<h1> Name of the enemy:  $this->eName Weapon of the enemy: $this->eWeapon  </h1>";
     }
     // function _constructForm(){}
 
   }
+?>
+<?php
     $enemyRat = new Enemy("Rat","Fist",12,12,12);
     $enemyHuman = new Enemy("BadHuman", "Magic",12,12,12);
     $enemyElf = new Enemy("BadElf", "Sword", 12,21,12);
     $arrayEnemies = array(
-      $enemyRat,
-      $enemyHuman,
-      $enemyElf
+      ["name"=>"enemyRat","object"=>$enemyRat],
+      ["name"=>"enemyHuman","object"=>$enemyHuman],
+      ["name"=>"enemyElf","object"=>$enemyElf]
     )
+
 ?>
 <?php
   if($_SERVER["REQUEST_METHOD"] == "POST"){
     $dado = $_POST["diceRoll"];
-    $modifier = $_POST["mod"];
+    $mod = $_POST["mod"];
+    $modEn = $_POST["modEn"];
     if(isset($_POST["advdis"])) $advdis = $_POST["advdis"];
+    if(isset($_POST["advdisEn"])) $advdisEn = $_POST["advdisEn"];
     $enemySelect = $_POST["enemySelect"];
-    showEnemy($enemySelect,$arrayEnemies);
+    $enemyFinal = adjustEnemy($enemySelect,$arrayEnemies);
+    
   } 
 
-  function showEnemy($enemySelected, $arrayEnemies){
-    $enemyObject;
-    switch($enemySelected){
-      case "enemyRat":
-        $enemyObject = $arrayEnemies[0];
-        break;
-      case "enemyHuman":
-        $enemyObject = $arrayEnemies[1];
-        break;
-      default:
-        $enemyObject = $arrayEnemies[2];
-        break;
+  function adjustEnemy($enemySelected, $arrayEnemies){
+    $enemyObject = ""; 
+    foreach($arrayEnemies as $enemy){
+      if($enemy["name"] == $enemySelected){
+        $enemyObject = $enemy["object"];
+      }
     }
-    echo  var_dump($arrayEnemies[0]);
-    echo "<h1>".$enemyObject->get_eStrength()."</h1>";
+    return $enemyObject;
   }
 
 ?>
 <?php 
-  function calcRoll(){
+  function calcRollUser($dado, $mod){
+    $resultadoUser= 0;
 
+    if(isset($_POST["advdis"])) $resultadoUser = calcAdvdis($dado);
+      else $resultadoUser = rand(1, $dado);
+    if ($resultadoUser == 1) echo "<br>Pifia absoluta <br>";
+      else if($resultadoUser == $dado) echo "<br>TOMAAAAAA Crítico!!! <br>";
+    echo "User has rolled: ".$resultadoUser;
+    if(empty($_POST["mod"])){
+      $mod=0;
+    }
+    $resultadoUser = $resultadoUser +$mod;
+    return $resultadoUser;
   }
+  function calcRollenemy($dado, $modEn){
+    $resultadoEnemy= 0;
+    if(isset($_POST["advdisEn"])) $resultadoEnemy = calcAdvdisEn($dado);
+      else $resultadoEnemy = rand(1, $dado);
+    if ($resultadoEnemy == 1) echo "<br>Pifia absoluta <br>";
+      else if($resultadoEnemy == $dado) echo "<br>TOMAAAAAA Crítico!!! <br>";
+    echo "Enemy has rolled: ".$resultadoEnemy;
+    if(empty($_POST["modEn"])){
+      $modEn=0;
+    }
+    $resultadoEnemy = $resultadoEnemy + $modEn;
+    return $resultadoEnemy ;
+  }
+
+  function calcAdvdis($data){
+      if($_POST["advdis"]==1){
+        $dado1 = rand(1, $data);
+        $dado2 = rand(1,$data);
+        if($dado1 > $dado2) $resultado=$dado2;
+        else $resultado = $dado1;
+      }
+       elseif($_POST["advdis"]==2){
+        $dado1 = rand(1, $data);
+        $dado2 = rand(1,$data);
+        if($dado1 < $dado2) $resultado=$dado2;
+        else $resultado = $dado1;
+  
+      }
+      return $resultado;
+    }
+     function calcAdvdisEn($data){
+      if($_POST["advdisEn"]==1){
+        $dado1 = rand(1, $data);
+        $dado2 = rand(1,$data);
+        if($dado1 > $dado2) $resultado=$dado2;
+        else $resultado = $dado1;
+      }
+       elseif($_POST["advdisEn"]==2){
+        $dado1 = rand(1, $data);
+        $dado2 = rand(1,$data);
+        if($dado1 < $dado2) $resultado=$dado2;
+        else $resultado = $dado1;
+  
+      }
+      return $resultado;
+    }
 ?>
 
 
@@ -118,11 +175,14 @@ class Enemy{
         <td>
         Disadvantage:<input type="radio" name="advdis" id="adv" value="1">
         Advantage: <input type="radio" name="advdis" id="dis" value="2">
+        Enemy Disadvantage:<input type="radio" name="advdisEn" id="advEn" value="1">
+        Enemy Advantage: <input type="radio" name="advdisEn" id="disEn" value="2">
         </td>
       </tr>
       <tr>
         <td>
           Does it have modifiers: <input type="number" name="mod" id="mod">
+          Does the enemy have modifiers: <input type="number" name="modEn" id="modEn">
         </td>
       </tr>
       <tr>
@@ -140,7 +200,10 @@ class Enemy{
   </aside>
   <main class="results">
     <?php 
-    //calcRoll();
+    if(isset($dado)){
+    calcRollUser($dado,$mod);
+    calcRollEnemy($dado,$modEn);
+    }
     ?>
   </main>
 </body>
