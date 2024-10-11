@@ -15,6 +15,7 @@
   if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["formPerso"])){
     $_SESSION["name"]= test_input($_POST["vName"]);
     $_SESSION["race"]= test_input($_POST["vRace"]);
+    $_SESSION["hpUser"] = 50;
     //I gets the string of value of the select
     $_SESSION["weapon"] = test_input($_POST["vWeapon"]);
     $weapon= test_input($_POST["vWeapon"]);
@@ -22,7 +23,7 @@
   }
   
   if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["formStats"])){
-    $_SESSION["strenght"] = test_input($_POST["Strenght"]);
+    $_SESSION["strength"] = test_input($_POST["Strength"]);
     $_SESSION["defense"] =  test_input($_POST["Defense"]);
     $_SESSION["evasion"] =  test_input($_POST["Evasion"]); 
   }
@@ -83,7 +84,7 @@
         $min = 8;
         break;
       case "Sword";
-        $min = 12;
+        $min = 10;
         break;
       default:
         $min = 10;
@@ -178,8 +179,8 @@
     <th>CHARACTER STATISTICS</th>
     <tbody>
       <tr>
-        <td>Strenght: </td>
-        <td><input type="number" name="Strenght" value="<?php if(isset($weapon)) echo check_weapon_min_str($weapon)?>" max=<?php if(isset($weapon))echo check_weapon_max_str($weapon)?> min="<?php if(isset($weapon))echo check_weapon_min_str($weapon)?>"></td>
+        <td>Strength: </td>
+        <td><input type="number" name="Strength" value="<?php if(isset($weapon)) echo check_weapon_min_str($weapon)?>" max=<?php if(isset($weapon))echo check_weapon_max_str($weapon)?> min="<?php if(isset($weapon))echo check_weapon_min_str($weapon)?>"></td>
       </tr>
       <tr>
         <td>Defense:</td>
@@ -202,12 +203,11 @@
 <?php
 }
  if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["formStats"])){
-  echo "Is this right: ".$_SESSION["name"]. "<br> ". $_SESSION["race"]. " <br>". $_SESSION["weapon"]. "<br> ". $_SESSION["strenght"]. "<br> ". $_SESSION["defense"]. " <br> ". $_SESSION["evasion"]. " <br> if so: ";
+  echo "Is this right: ".$_SESSION["name"]. "<br> ". $_SESSION["race"]. " <br>". $_SESSION["weapon"]. "<br> ". $_SESSION["strength"]. "<br> ". $_SESSION["defense"]. " <br> ". $_SESSION["evasion"]. " <br> if so: ";
   ?> <a href="roll_dice.php">Let's Roll!</a>
   <?php
  }
 ?>
-  
 
 <a href="index_proxecto.php" >Go back to index</a>
 </body>
