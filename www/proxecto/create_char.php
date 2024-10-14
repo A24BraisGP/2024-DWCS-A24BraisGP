@@ -1,4 +1,5 @@
 <?php 
+  // Tries to iniciate session
   session_start();
   if(!isset($_SESSION['user'])){
     header("Location: login_user.php?redirected=true");
@@ -11,14 +12,13 @@
 	  return $data;
   }
 
-
+  // Once the data is sent, it is attributed to the adecuate session variables 
   if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["formPerso"])){
-    $_SESSION["name"]= test_input($_POST["vName"]);
-    $_SESSION["race"]= test_input($_POST["vRace"]);
     $_SESSION["hpUser"] = 50;
-    //I gets the string of value of the select
+    //I get the string of value of the select
     $_SESSION["weapon"] = test_input($_POST["vWeapon"]);
     $weapon= test_input($_POST["vWeapon"]);
+    $_SESSION["damageDealt"] = 0;
 
   }
   
@@ -28,7 +28,7 @@
     $_SESSION["evasion"] =  test_input($_POST["Evasion"]); 
   }
 
-
+  // Series of methods that determine the maximum and minimun value of each variable depending on the outcome of the select["vWeapon"]
   function check_weapon_max_str($weapon){
     $max = 0;
     switch($weapon){
@@ -134,7 +134,8 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <?php echo "<h1> Welcome " . $_SESSION['user']. "</h1>"?>
+  <?php 
+  include 'header.php';?>
   <aside id="formLeft">
     <table>
     <tbody>
@@ -142,12 +143,8 @@
     <th>CHARACTER PERSONALISATION</th>
     <tr>
       <td> Name:</td>
-      <td><input type="text" name="vName" placeholder="Name" value="<?php if(isset($_SESSION["name"])) echo $_SESSION["name"] ?>"></td>
+      <td><?php echo $_SESSION["user"]?></td>
      </tr>
-    <tr>
-      <td>Race:</td>
-      <td><input type="text" name="vRace" placeholder="Race" value="<?php if(isset($_SESSION["race"])) echo $_SESSION["race"] ?>"></td>
-    </tr>
   <tr>
     <td>
       Weapon:
@@ -171,6 +168,7 @@
 
 </aside>
   <br>
+  <!-- Once the weapon is set, that is, some information has been sent, the following form is displayed -->
   <?php if (isset($weapon)) {
     ?>
 <aside id="formRight">
@@ -202,13 +200,38 @@
 </aside>  
 <?php
 }
+ // Once the second form is sent, a link to the roll page is displayed, asking before hand if all data is correct
  if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["formStats"])){
-  echo "Is this right: ".$_SESSION["name"]. "<br> ". $_SESSION["race"]. " <br>". $_SESSION["weapon"]. "<br> ". $_SESSION["strength"]. "<br> ". $_SESSION["defense"]. " <br> ". $_SESSION["evasion"]. " <br> if so: ";
-  ?> <a href="roll_dice.php">Let's Roll!</a>
+  ?>
+  <table>
+<tr>
+  <td>
+    Strength:
+    <?php echo $_SESSION["strength"]. "<br>" ?>
+  </td>
+</tr>
+<tr>
+  <td>
+    Defense: 
+    <?php echo $_SESSION["defense"]. "<br>" ?>
+  </td>
+</tr>
+<tr>
+  <td>
+    Evasion: 
+    <?php echo $_SESSION["evasion"]. "<br>" ?>
+  </td>
+</tr>
+<tr>
+  <td>
+    Weapon: 
+    <?php echo $_SESSION["weapon"]. "<br>" ?>
+  </td>
+</tr>
+  </table>
+  <a href="roll_dice.php">Roll the die</a>
   <?php
  }
 ?>
-
-<a href="index_proxecto.php" >Go back to index</a>
 </body>
 </html>

@@ -11,6 +11,7 @@
 </head>
 <body>
 <?php 
+  // Vacía os datos da session e logo a destrúe
   session_unset();
 
   session_destroy();

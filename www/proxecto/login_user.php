@@ -1,8 +1,13 @@
 <?php 
+  // Checks if the input is adecuate and if so, initialices a session and redirects to the php page create_char
+  $userErr = "";
   if($_SERVER["REQUEST_METHOD"] == "POST"){
     $logErr=false;
     $clearLogin = false;
     $user = test_input($_POST["user"]);
+    if(empty($user)){
+      $userErr = "User data empty";
+    }
     $password = test_input($_POST["passw"]);
     $clearLogin= check_user($user,$password);
     if($clearLogin == false){
@@ -22,7 +27,7 @@
   }
 
   
-
+  // Checks if the input coincides with the data necesary to start a session
   function check_user($user,$password){
     if($user === "Blath" && $password === "123"){
       $clearLogin['name']= "Blath";
@@ -45,7 +50,9 @@
 
 </head>
 <body>
-  <?php 
+  <?php
+    // Includes Header. Checks if the user was redirected from any other page (because the session_start() failed) 
+    include 'header.php'; 
     if(isset($_GET["redirected"])){
       echo "<h2>Please introduce login to proceed</h2>";
     }
@@ -60,6 +67,7 @@
   User: <input id="user" name="user" type="text" value="<?php 
   if(isset($user)) echo $user;?>">
   <br>
+  <?php echo $userErr?>
   <br>
   Password:
   <input type="password" name="passw" id="passw">

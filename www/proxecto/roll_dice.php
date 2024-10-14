@@ -3,17 +3,17 @@
   if(!isset($_SESSION['user'])){
     header("Location: login_user.php?redirected=true");
   }
-  $userName= $_SESSION["name"];
-  $usetRace = $_SESSION["race"];
+  $userName= $_SESSION["user"];
   $userWeapon = $_SESSION["weapon"];
   $userStrength = $_SESSION["strength"];
   $userDefense = $_SESSION["defense"];
   $userEvasion = $_SESSION["evasion"];
   $userHP = $_SESSION["hpUser"];
   $_SESSION["damageDealt"];
-
   ?>
 <?php
+  // Creates class Enemy from with it will take its data and stats to contrast it with the users
+  // An aditional option would be to make a form in which the user could create its own enemy
 class Enemy{
     public $eName;
     public $eWeapon;
@@ -78,7 +78,6 @@ class Enemy{
     public function __toString(){
       return "<h1> Name of the enemy:  $this->eName <br> Weapon of the enemy: $this->eWeapon <br> HP of the enemy: $this->hpEnemy </h1>";
     }
-    // function _constructForm(){}
 
   }
 ?>
@@ -94,6 +93,7 @@ class Enemy{
 
 ?>
 <?php
+  // Once data is submitted the variables are iniciated and so different methods are called. 
   if($_SERVER["REQUEST_METHOD"] == "POST"){
     $dado = $_POST["diceRoll"];
     $mod = $_POST["mod"];
@@ -108,7 +108,7 @@ class Enemy{
   } 
 
 
-
+  // This method iniciates the enemy at the corresponding instance of the object by name
   function adjustEnemy($enemySelected, $arrayEnemies){
     $enemyObject = ""; 
     foreach($arrayEnemies as $enemy){
@@ -119,6 +119,7 @@ class Enemy{
     return $enemyObject;
   }
 
+  // This method alters the enemy instanciated statistics based on which weapon was selected. 
   function adjustStatsEnemy($enemy){
     if($enemy->get_eWeapon()== "eFist"){
       $enemy->set_eDefense($enemy->get_eDefense()-3);
@@ -137,6 +138,8 @@ class Enemy{
 
 ?>
 <?php 
+  // This function takes the number of faces of the dice and the modifier given and rolls it with the rand() php function. It calls an aditional method if the user has set advantage or disadvantage
+  // If a 1 is rolled it is considered a failure, if the maximum of the dice is rolled it is considered a critical lucky hit 
   function calcRollUser($dado, $mod){
     $resultadoUser= 0;
 
@@ -151,6 +154,8 @@ class Enemy{
     $resultadoUser = $resultadoUser +$mod;
     return $resultadoUser;
   }
+
+  // This function does the same as above but for the enemy
   function calcRollenemy($dado, $modEn){
     $resultadoEnemy= 0;
     if(isset($_POST["advdisEn"])) $resultadoEnemy = calcAdvdisEn($dado);
@@ -165,6 +170,7 @@ class Enemy{
     return $resultadoEnemy ;
   }
 
+  // This method takes in consideration the distiction of advantage and disadvantage. With each it rolls twice, with advantage it takes the highest roll without modifiers, with disadvantage it takes the lowest roll without modifiers
   function calcAdvdis($data){
       if($_POST["advdis"]==1){
         $dado1 = rand(1, $data);
@@ -198,6 +204,7 @@ class Enemy{
       return $resultado;
     }
 
+   // This function compares the results of both in order to determine which hits
    function doesItHit($resultUser, $resultEnemy){
       $userHit = false;
       if($resultUser>$resultEnemy){
@@ -206,19 +213,20 @@ class Enemy{
       return $userHit;
     }
 
+    // This function calculates damage after the rolls of both entities, it subtracs damage from defense and takes evasion into consideration, if the check (rand() between 1 and 20) is lower than the evasion, the hit fails). The users damage dealt is kept in a session variable as to show how much progress they have made, as enemy HP is kept secret
     function damageCalculator($hitCheck,$userStrength,$userDefense,$userEvasion, $enemy){
       $damageDealtUser = 0;
       $damageDealtEnemy = 0;
       if($hitCheck){
         $damageDealtUser = $enemy->get_eDefense()- $userStrength;
-        if(rand(0,20)<$enemy->get_eEvasion()){
+        if(rand(1,20)<$enemy->get_eEvasion()){
           $damageDealtUser = 0;
           echo "YOU MISSED";
         }
       }
       else{
         $damageDealtEnemy = $userDefense - $enemy->get_eStrength();
-        if(rand(0,20)<$userEvasion){
+        if(rand(1,20)<$userEvasion){
           $damageDealtEnemy =0;
           echo "THE ENEMY MISSED";
         }
@@ -237,47 +245,78 @@ class Enemy{
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <?php include 'header.php'; ?>
   <header class="explanation">Explanation of the system</header>
-  <aside class="input"><form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="post">
+  <aside class="input">
+  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="post">
     <table>
       <th>Input the modifiers</th>
+      <tbody>
       <tr>
         <td>
           <select name="diceRoll" id="diceRoll">
-            <option name="diceD20" value="20">D20</option>
-            <option name="diceD12" value="12">D12</option>
-            <option name="diceD6" value="6">D6</option>
-            <option name="diceD4" value="4">D4</option>
+            <option name="diceD20" value="20">Dice 20</option>
+            <option name="diceD12" value="12">Dice 12</option>
+            <option name="diceD6" value="6">Dice 6</option>
+            <option name="diceD4" value="4">Dice 4</option>
       </select>
         </td>
       </tr>
       <tr>
         <td>
-        Disadvantage:<input type="radio" name="advdis" id="adv" value="1">
-        Advantage: <input type="radio" name="advdis" id="dis" value="2">
+        Disadvantage:
+        </td>
+        <td>
+          <input type="radio" name="advdis" id="adv" value="1">
+        </td>
+        <td>
+        Advantage: 
+        </td>
+        <td>
+          <input type="radio" name="advdis" id="dis" value="2">
         </td>
       </tr>
       <tr>
         <td>
-          Enemy Disadvantage:<input type="radio" name="advdisEn" id="advEn" value="1">
-          Enemy Advantage: <input type="radio" name="advdisEn" id="disEn" value="2">
+          Enemy Disadvantage:
+        </td>
+        <td>
+          <input type="radio" name="advdisEn" id="advEn" value="1">
+        </td>
+        <td>
+          Enemy Advantage:
+        </td>
+        <td>
+           <input type="radio" name="advdisEn" id="disEn" value="2">
         </td>
       </tr>
       <tr>
         <td>
-          Does it have modifiers: <input type="number" name="mod" id="mod">
+          Does it have modifiers: 
+        </td>
+        <td>
+          <input type="number" name="mod" id="mod">
+       
         </td>
       </tr>
       <tr>
         <td>
-           Does the enemy have modifiers: <input type="number" name="modEn" id="modEn">
+           Does the enemy have modifiers:
+            </td> 
+        <td>
+              <input type="number" name="modEn" id="modEn">
+        
         </td>
       </tr>
       <tr>
         <td>
           Select the enemy: 
+          
+        </td>
+        <td>
           <select name="enemySelect" id="enemySelect">
            <option value="enemyRat" <?php if(isset($enemySelect)&& $enemySelect=="enemyRat") echo "selected"?>>Rat</option>
            <option value="enemyHuman" <?php if(isset($enemySelect)&& $enemySelect=="enemyHuman") echo "selected"?>>Human</option>
@@ -288,6 +327,9 @@ class Enemy{
       <tr>
         <td>
           Select enemy weapon:
+          
+        </td>
+        <td>
           <select name="enemyWeaponSelect" id="enemyWeaponSelect">
             <option value="eSword">Sword</option>
             <option value="eFist">Fist</option>
@@ -295,15 +337,13 @@ class Enemy{
           </select>
         </td>
       </tr>
+      </tbody>
     </table>
     <input type="submit" value="Let's fight!" name="fight">
    </form>
   </aside>
   <main class="results">
     <?php 
-    if(isset($enemyFinal)){
-      echo "<h3> The enemy is :". $enemyFinal."</h3>";
-    }
     if(isset($dado)){
     $hitCheck = doesItHit(calcRollUser($dado,$mod),calcRollEnemy($dado,$modEn));
     echo ($hitCheck)? "User Hit!" : "Enemy Hit! Brace yourselves!";
@@ -314,7 +354,7 @@ class Enemy{
     $_SESSION["hpUser"] = $_SESSION["hpUser"] + $damageEnemy;
     echo "Your HP now is: ".$_SESSION["hpUser"]."<br>";
     echo "Enemy's HP now is: ".$enemyFinal->get_hpEnemy()."<br>";
-    if($enemyFinal->get_hpEnemy() < 0){
+    if($enemyFinal->get_hpEnemy() <= 0){
       echo "<h1>The enemy has fallen</h1>";
       ?>
       <table>
@@ -331,20 +371,21 @@ class Enemy{
     </table>
       <?php 
     }
-    }
-    ?>
-    <table>
+    if($_SESSION["hpUser"] <= 0){
+      echo "<h1>You are dead</h1>";
+      ?>
+      <table>
      <tr>
       <td>
-        <a href="create_char.php">Go back to create char</a>
+        <a href="logout.php">Logout</a>
       </td>
      </tr>
-     <tr>
-      <td>
-            <a href="index_proxecto.php">Go back to index</a>
-      </td>
-     </tr> 
     </table>
+      <?php
+    }
+    }
+
+    ?>
   </main>
 </body>
 </html>
