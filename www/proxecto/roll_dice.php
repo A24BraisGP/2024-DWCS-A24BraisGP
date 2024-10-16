@@ -235,6 +235,34 @@ class Enemy{
       $enemy->set_hpEnemy($enemy->get_hpEnemy()+$_SESSION["damageDealt"]);
       return $damageDealtEnemy;
     }
+
+    function isSomeoneDead($userHp,$enemyHp){
+      $alive = true;
+      if($userHp <= 0){
+          echo "<h1>You have fallen in battle</h1>";
+         ?>
+         <table>         
+            <th> <a href="logout.php">Logout</a></th>
+         </table>
+         <?php
+         $alive=false;
+      } 
+
+      if($enemyHp <= 0){
+        echo "<h1>The enemy has fallen</h1>";
+        $_SESSION["damageDealt"] = 0;
+      ?>
+        <table>
+          <th>
+            <a href="index_proxecto.php">Go back to index</a>
+          </th>    
+        </table>
+        <?php
+        $alive=false;
+    }
+
+     return $alive;
+  }
 ?>
 
 
@@ -253,6 +281,7 @@ class Enemy{
   include 'footer.php';
   ?>
   <header class="explanation">Explanation of the system</header>
+  <main id="rollItems">
   <aside class="input">
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="post">
     <table>
@@ -348,30 +377,22 @@ class Enemy{
     
    </form>
   </aside>
-  <main id="results">
+  <section id="results">
     <?php 
     if(isset($dado)){
-      if($_SESSION["hpUser"] <= 0){
-      echo "<h1>You are dead</h1>";
-      ?>
+     $hitCheck = doesItHit(calcRollUser($dado,$mod),calcRollEnemy($dado,$modEn));
+     $damageEnemy = damageCalculator($hitCheck, $userStrength, $userDefense,$userEvasion,$enemyFinal);
+     if(isSomeoneDead($_SESSION["hpUser"],$enemyFinal->get_hpEnemy())){
+            ?>
       <table>
-     <tr>
-      <td>
-        <a href="logout.php">Logout</a>
-      </td>
-     </tr>
-    </table>
-    <?php
-    }
-      ?>
-      <table>
-        <th>RESULTS OF COMBAT</th>
+        <th>RESULTS OF COMBAT</th> 
+        
         <tr>
-          <td> <?php $hitCheck = doesItHit(calcRollUser($dado,$mod),calcRollEnemy($dado,$modEn));?></td>
+          <td> <?php $hitCheck;?></td>
           
         </tr>
         <tr>
-          <td> <?php $damageEnemy = damageCalculator($hitCheck, $userStrength, $userDefense,$userEvasion,$enemyFinal);?></td>
+          <td> <?php $damageEnemy;?></td>
           
         </tr>
 
@@ -402,44 +423,13 @@ class Enemy{
         <tr>
           <td><?php echo "Enemy's HP now is: ".$enemyFinal->get_hpEnemy()."<br>"; ?></td>
         </tr>
-
-
-        <tr>
-          <td><?php
-             if($enemyFinal->get_hpEnemy() <= 0){
-             echo "<h1>The enemy has fallen</h1>";
-        ?></td>
-        </tr>
-      </table>
-      
-    <table>
-     <tr>
-      <td>
-        <a href="create_char.php">Go back to create char</a>
-      </td>
-     </tr>
-     <tr>
-      <td>
-            <a href="index_proxecto.php">Go back to index</a>
-      </td>
-     </tr> 
-    </table>
+     
+      </table>  
       <?php 
-    }
-    if($_SESSION["hpUser"] <= 0){
-      echo "<h1>You are dead</h1>";
-      ?>
-      <table>
-     <tr>
-      <td>
-        <a href="logout.php">Logout</a>
-      </td>
-     </tr>
-    </table>
-      <?php
-    }
-    }
+      }  
+    } 
     ?>
+    </section>
   </main>
 </body>
 </html>

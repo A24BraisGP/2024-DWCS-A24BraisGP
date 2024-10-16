@@ -33,7 +33,7 @@
     $max = 0;
     switch($weapon){
       case "Magic":
-        $max = 14;
+        $max = 16;
         break;
       case "Sword";
         $max = 18;
@@ -49,7 +49,7 @@
     $min = 0;
     switch($weapon){
       case "Magic":
-        $min = 8;
+        $min = 16;
         break;
       case "Sword";
         $min = 12;
