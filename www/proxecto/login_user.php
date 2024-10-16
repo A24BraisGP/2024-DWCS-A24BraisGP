@@ -53,6 +53,7 @@
   <?php
     // Includes Header. Checks if the user was redirected from any other page (because the session_start() failed) 
     include 'header.php'; 
+    include 'footer.php';
     if(isset($_GET["redirected"])){
       echo "<h2>Please introduce login to proceed</h2>";
     }

@@ -248,16 +248,19 @@ class Enemy{
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <?php include 'header.php'; ?>
+  <?php 
+  include 'header.php';
+  include 'footer.php';
+  ?>
   <header class="explanation">Explanation of the system</header>
   <aside class="input">
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="post">
     <table>
-      <th>Input the modifiers</th>
+        <th>Input the modifiers</th>
       <tbody>
       <tr>
         <td>
-          <select name="diceRoll" id="diceRoll">
+          <select class="selectInput" name="diceRoll" id="diceRoll">
             <option name="diceD20" value="20">Dice 20</option>
             <option name="diceD12" value="12">Dice 12</option>
             <option name="diceD6" value="6">Dice 6</option>
@@ -270,13 +273,13 @@ class Enemy{
         Disadvantage:
         </td>
         <td>
-          <input type="radio" name="advdis" id="adv" value="1">
+          <input type="radio" name="advdis" id="adv" value="1" style="accent-color: #63453f">
         </td>
         <td>
         Advantage: 
         </td>
         <td>
-          <input type="radio" name="advdis" id="dis" value="2">
+          <input type="radio" name="advdis" id="dis" value="2" style="accent-color: #63453f">
         </td>
       </tr>
       <tr>
@@ -284,13 +287,13 @@ class Enemy{
           Enemy Disadvantage:
         </td>
         <td>
-          <input type="radio" name="advdisEn" id="advEn" value="1">
+          <input type="radio" name="advdisEn" id="advEn" value="1" style="accent-color: #63453f">
         </td>
         <td>
           Enemy Advantage:
         </td>
         <td>
-           <input type="radio" name="advdisEn" id="disEn" value="2">
+           <input type="radio" name="advdisEn" id="disEn" value="2" style="accent-color: #63453f">
         </td>
       </tr>
       <tr>
@@ -298,7 +301,7 @@ class Enemy{
           Does it have modifiers: 
         </td>
         <td>
-          <input type="number" name="mod" id="mod">
+          <input class="textInput" type="number" name="mod" id="mod">
        
         </td>
       </tr>
@@ -307,7 +310,7 @@ class Enemy{
            Does the enemy have modifiers:
             </td> 
         <td>
-              <input type="number" name="modEn" id="modEn">
+              <input class="textInput" type="number" name="modEn" id="modEn">
         
         </td>
       </tr>
@@ -317,7 +320,7 @@ class Enemy{
           
         </td>
         <td>
-          <select name="enemySelect" id="enemySelect">
+          <select class="selectInput" name="enemySelect" id="enemySelect">
            <option value="enemyRat" <?php if(isset($enemySelect)&& $enemySelect=="enemyRat") echo "selected"?>>Rat</option>
            <option value="enemyHuman" <?php if(isset($enemySelect)&& $enemySelect=="enemyHuman") echo "selected"?>>Human</option>
            <option value="enemyElf" <?php if(isset($enemySelect)&& $enemySelect=="enemyElf") echo "selected"?>>Elf</option>
@@ -330,34 +333,86 @@ class Enemy{
           
         </td>
         <td>
-          <select name="enemyWeaponSelect" id="enemyWeaponSelect">
+          <select class="selectInput" name="enemyWeaponSelect" id="enemyWeaponSelect">
             <option value="eSword">Sword</option>
             <option value="eFist">Fist</option>
             <option value="eMagic">Magic</option>
           </select>
         </td>
       </tr>
+      <tr>
+        <td><input class="submitInput" type="submit" value="Let's fight!" name="fight"></td>
+      </tr>
       </tbody>
     </table>
-    <input type="submit" value="Let's fight!" name="fight">
+    
    </form>
   </aside>
-  <main class="results">
+  <main id="results">
     <?php 
     if(isset($dado)){
-    $hitCheck = doesItHit(calcRollUser($dado,$mod),calcRollEnemy($dado,$modEn));
-    echo ($hitCheck)? "User Hit!" : "Enemy Hit! Brace yourselves!";
-    $damageEnemy = damageCalculator($hitCheck, $userStrength, $userDefense,$userEvasion,$enemyFinal);
-    echo "<br>";
-    echo "The enemy dealt: ".$damageEnemy."<br>";
-    echo "You've dealt: ".$_SESSION["damageDealt"]."<br>";
-    $_SESSION["hpUser"] = $_SESSION["hpUser"] + $damageEnemy;
-    echo "Your HP now is: ".$_SESSION["hpUser"]."<br>";
-    echo "Enemy's HP now is: ".$enemyFinal->get_hpEnemy()."<br>";
-    if($enemyFinal->get_hpEnemy() <= 0){
-      echo "<h1>The enemy has fallen</h1>";
+      if($_SESSION["hpUser"] <= 0){
+      echo "<h1>You are dead</h1>";
       ?>
       <table>
+     <tr>
+      <td>
+        <a href="logout.php">Logout</a>
+      </td>
+     </tr>
+    </table>
+    <?php
+    }
+      ?>
+      <table>
+        <th>RESULTS OF COMBAT</th>
+        <tr>
+          <td> <?php $hitCheck = doesItHit(calcRollUser($dado,$mod),calcRollEnemy($dado,$modEn));?></td>
+          
+        </tr>
+        <tr>
+          <td> <?php $damageEnemy = damageCalculator($hitCheck, $userStrength, $userDefense,$userEvasion,$enemyFinal);?></td>
+          
+        </tr>
+
+
+        <tr>
+          <td> <?php 
+          echo ($hitCheck)? "User Hit!" : "Enemy Hit! Brace yourselves!";?>
+          </td>
+        </tr>
+
+
+        <tr>
+          <td><?php echo "The enemy dealt: ".$damageEnemy."<br>"; 
+           $_SESSION["hpUser"] = $_SESSION["hpUser"] + $damageEnemy;?></td>
+          
+        </tr>
+
+        <tr>
+          <td><?php echo "You've dealt: ".$_SESSION["damageDealt"]."<br>"; ?></td>
+        </tr>
+
+        <tr>
+          <td><?php echo "Your HP now is: ".$_SESSION["hpUser"]."<br>";?></td>
+         
+        </tr>
+
+
+        <tr>
+          <td><?php echo "Enemy's HP now is: ".$enemyFinal->get_hpEnemy()."<br>"; ?></td>
+        </tr>
+
+
+        <tr>
+          <td><?php
+             if($enemyFinal->get_hpEnemy() <= 0){
+             echo "<h1>The enemy has fallen</h1>";
+        ?></td>
+        </tr>
+      </table>
+      
+    <table>
      <tr>
       <td>
         <a href="create_char.php">Go back to create char</a>
@@ -384,7 +439,6 @@ class Enemy{
       <?php
     }
     }
-
     ?>
   </main>
 </body>

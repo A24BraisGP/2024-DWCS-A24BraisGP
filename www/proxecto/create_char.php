@@ -135,7 +135,9 @@
 </head>
 <body>
   <?php 
-  include 'header.php';?>
+  include 'header.php';
+  include 'footer.php';
+  ?>
   <aside id="formLeft">
     <table>
     <tbody>
@@ -150,7 +152,7 @@
       Weapon:
     </td>
     <td>
-      <select type="text" name="vWeapon">
+      <select class="selectInput" type="text" name="vWeapon">
         <option value="Sword" name="vSword"  <?php if(isset($weapon) && $weapon ==  "Sword") echo "selected"?>>Sword</option>
         <option value="Magic" name="vMagic" <?php if(isset($weapon) && $weapon ==  "Magic") echo "selected"?>>Magic</option>
         <option value="Fist" name="vFist" <?php if(isset($weapon) && $weapon ==  "Fist") echo "selected"?>>Fist</option>
@@ -158,7 +160,7 @@
   </tr>
    <tr>
        <td>
-<input type="submit" value="Proceed to stats" name="formPerso">
+<input class="submitInput" type="submit" value="Proceed to stats" name="formPerso">
 
        </td>  
      </tr>
@@ -190,7 +192,7 @@
       </tr> 
       <tr>
        <td>
-          <input type="submit" value="Let's Roll!" name="formStats">
+          <input class="submitInput" type="submit" value="Let's Roll!" name="formStats">
 
        </td>  
      </tr>
@@ -203,7 +205,8 @@
  // Once the second form is sent, a link to the roll page is displayed, asking before hand if all data is correct
  if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["formStats"])){
   ?>
-  <table>
+  <table id="tableStats">
+    <th>Your stats:</th>
 <tr>
   <td>
     Strength:
@@ -229,7 +232,7 @@
   </td>
 </tr>
   </table>
-  <a href="roll_dice.php">Roll the die</a>
+  <div id="rollAnchor"><a href="roll_dice.php">Roll the die</a></div>
   <?php
  }
 ?>
