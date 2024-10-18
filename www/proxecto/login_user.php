@@ -6,7 +6,7 @@
     $clearLogin = false;
     $user = test_input($_POST["user"]);
     if(empty($user)){
-      $userErr = "User data empty";
+      $userErr = "<br><strong>Please check your data</strong><br>";
     }
     $password = test_input($_POST["passw"]);
     $clearLogin= check_user($user,$password);
@@ -25,8 +25,6 @@
 	  $data = htmlspecialchars($data);
 	  return $data;
   }
-
-  
   // Checks if the input coincides with the data necesary to start a session
   function check_user($user,$password){
     if($user === "Blath" && $password === "123"){
@@ -51,32 +49,32 @@
 </head>
 <body>
   <?php
-    // Includes Header. Checks if the user was redirected from any other page (because the session_start() failed) 
-    include 'header.php'; 
-    include 'footer.php';
-    if(isset($_GET["redirected"])){
-      echo "<h2>Please introduce login to proceed</h2>";
-    }
-    if(isset($logErr) && $logErr == true){
-      echo "<h2>Please check you data</h2>";
-    }
-  ?>  
-
-
+  include 'header.php';
+  include 'footer.php';
+  ?>
+ 
+  
+  <main id="loginForm"> 
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
-
-  User: <input id="user" name="user" type="text" value="<?php 
+  <?php if(isset($_GET["redirected"])){
+      echo "<strong>Please introduce login to proceed</strong><br><br>";
+    }?>
+  User:
+  <br>
+  <input class="textInput" id="user" name="user" type="text" value="<?php 
   if(isset($user)) echo $user;?>">
   <br>
   <?php echo $userErr?>
   <br>
   Password:
-  <input type="password" name="passw" id="passw">
+  <br>
+  <input class="textInput" type="password" name="passw" id="passw">
 
   <br>
 
-  <input type="submit" name="sendLogin" value="Login">
+  <input class="submitInput" type="submit" name="sendLogin" value="Login">
 
   </form>
+  </main>
 </body>
 </html>

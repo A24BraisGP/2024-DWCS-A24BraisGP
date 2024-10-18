@@ -280,7 +280,20 @@ class Enemy{
   include 'header.php';
   include 'footer.php';
   ?>
-  <header class="explanation">Explanation of the system</header>
+  <header id="explanation">You are about to fight an enemy! <br>
+    > First: Select a dice, by default its a 20th faced dice (d20)<br>
+    > Second: Introduce the according [OPTIONAL] modifiers.
+    <br>
+    > Third: Select the enemy and weapon of choice (If you change the enemy they will recover their HP but you wont!)
+    <br>
+    The enemy will roll a dice and your results will be compared. The one who rolls higher gets to try a hit!
+    <br>
+    Then, evasion is taking into consideration, another roll determines if the hit connects (if its higher than the evasion of who lost the first roll)
+    <br>
+    > Finally, damage! Comparing strenght agaisnt defense and substracting that from the HP! Good Luck!
+
+
+  </header>
   <main id="rollItems">
   <aside class="input">
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="post">

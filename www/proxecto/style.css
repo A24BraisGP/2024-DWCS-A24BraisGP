@@ -25,11 +25,24 @@ header > a:hover {
   color: #ffffff;
 }
 header {
-  color: #6ecdf2;
+  color: #ffffff;
   display: flex;
   margin: 0;
   width: 100vw;
   height: 10vh;
+  background-color: #63453f;
+  border: 4px solid #63453f;
+  border-radius: 7px;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 3vh;
+}
+#explanation {
+  color: #ffffff;
+  display: flex;
+  margin: 0;
+  width: 100vw;
+  height: auto;
   background-color: #63453f;
   border: 4px solid #63453f;
   border-radius: 7px;

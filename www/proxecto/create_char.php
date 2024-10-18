@@ -160,8 +160,13 @@
   </tr>
    <tr>
        <td>
+        <?php 
+        if(!isset($weapon)){
+          ?>
 <input class="submitInput" type="submit" value="Proceed to stats" name="formPerso">
-
+<?php
+}
+?>
        </td>  
      </tr>
 </form>
