@@ -37,10 +37,11 @@ imprimeBebida($beberages);
 <body>
   <!-- <form>
   <select name="opcion">
-    <option value="cocacola"><?php imprimeBebida(0) ?></option>
-    <option value="pepsicola"><?php imprimeBebida(1) ?></option>
-    <option value="fantanaranja"><?php imprimeBebida(2) ?></option>
-    <option value="trinamanzana"><?php imprimeBebida(3) ?></option>
+    <option value="cocacola">
+      <?php ## imprimeBebida(0) ?></option>
+    <option value="pepsicola"><?php ## imprimeBebida(1) ?></option>
+    <option value="fantanaranja"><?php ## imprimeBebida(2) ?></option>
+    <option value="trinamanzana"><?php ## imprimeBebida(3) ?></option>
   </select>
 </form> -->
 </body>

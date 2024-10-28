@@ -3,16 +3,19 @@ class StudentGroup:
     def __init__(self, id, groupName, studentList):
         self.id = id
         self.groupName = groupName
-        self.studentList = [self.Student()]
+        self.studentList = studentList
 
     def __str__(self):
-        f"{self.id} {self.groupName} {self.students}"   
+        for item in self.studentList:
+            print(f"{item}")  
+            
+        return f"That was group {self.id} {self.groupName}" 
 
     class Student:
     
-        def __init__(self, id, Person, degree):
+        def __init__(self, id, person, degree):
             self.id = id
-            self.person = self.Person()
+            self.person = person
             self.degree = degree
 
         def __str__(self):
@@ -39,8 +42,18 @@ print(student1)
 print(student2)
 print(student3)
 
+
+
 studentList = [student1,student2, student3]
 
-studentG = StudentGroup(1, "GroupName", studentList)
+studentG = StudentGroup(1, "GroupOne", studentList)
 
+print(studentG)
+
+
+studentList.remove(student2)
+print(studentG)
+
+
+studentList.append(StudentGroup.Student(4,StudentGroup.Student.Person(40,"Marth",18),"computer science"))
 print(studentG)
