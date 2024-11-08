@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=s, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<h3>Novell Services Login</h3>
+		<form action="">
+			<label for="username">
+				Username:
+				<input
+					type="text"
+					name="username"
+					value="{{username}}"
+				/> </label
+			><br />
+			<label for="password">
+				Password:
+				<input type="password" name="password" value="{{password}}" /> </label
+			><br />
+			<label for="city">
+				City of employement:
+				<input type="text" name="city" value="{{city}}" /> </label
+			><br />
+			<label for="web-server">
+				Web server:
+				<select name="web-server" id="web-server">
+					<option value="apache" {% if {{webServer}} is not '' %}selected="selected"{% endif %}>Apache</option>
+					<option value="nginx"{% if {{webServer}} is not '' %}selected="selected"{% endif %}>Nginx</option>
+					<option value="cloudfare"{% if {{webServer}} is not '' %}selected="selected"{% endif %}>Cloudfare</option>
+				</select> </label
+			><br />
+			<label for="role">
+				Please especify your role: <br />
+				<input type="radio" value="admin" name="role" {% if {{role}} is 'admin' %}checked{% endif %}/>
+				Admin
+				<br />
+				<input type="radio" value="engineer" name="role" {% if {{role}} is 'engineer' %}checked{% endif %} />
+				Engineer
+				<br />
+				<input type="radio" value="manager" name="role" {% if {{role}} is 'manager' %}checked{% endif %}/>
+				Manager
+				<br>
+				<input type="radio" value="guest" name="role" {% if {{role}} is 'guest' %}checked{% endif %}/>
+				Guest
+				<br />
+			</label>
+			<label for="sign-on">
+				Single Sign-on to the following: <br />
+				<input type="checkbox" name="sign-on1" value="mail" />Mail<br />
+				<input
+					type="checkbox"
+					name="sign-on2"
+					value="payroll"
+				/>Payroll<br />
+				<input
+					type="checkbox"
+					name="sign-on3"
+					value="self"
+				/>Self-service<br />
+			</label>
+
+			<input type="submit" value="Login" />
+		</form>
+	</body>
+</html>
