@@ -19,4 +19,5 @@ from django.urls import path
 from formularioApp import views
 urlpatterns = [
     path('', views.home),
+    path('results', views.results, name="results")
 ]

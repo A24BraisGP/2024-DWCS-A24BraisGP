@@ -1,32 +1,42 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-def home(request):
-    username = ''
-    if request.GET.get('username'):
-        username = request.GET.get('username')
-        
-    password = ''
-    if request.GET.get('password'):
-        password = request.GET.get('password')
-        
-    city = ''
-    if request.GET.get('city'):
-        city = request.GET.get('city')
-        
-    webServer = ''
-    if request.GET.get('web-server'):
-        webServer = request.GET.get('web-server')
-        
-    role = ''
-    if request.GET.get('role'):
-        role = request.GET.get('web-server')
-        
-    signOn = ''
-    if request.GET.get('sign-on'):
-        signOn = request.GET.get('sign-on')
-
-
-    return render(request, 'formularioApp/home.html',{'username':username, 'password':password,'city':city,'web-server':webServer,'role':role,'sign-on':signOn})
-
 # Create your views here.
+
+
+def home(request):
+    return render(request, 'formularioApp/home.html')
+
+def results(request):
+    data = {'username':''}
+    if request.GET.get('username'):
+        data['username'] = request.GET.get('username')
+        
+    if request.GET.get('password'):
+        data['password'] = request.GET.get('password')
+        
+    
+    if request.GET.get('city'):
+        data['city']= request.GET.get('city')
+        
+   
+    if request.GET.get('web-server'):
+        data['webServer'] = request.GET.get('web-server')
+        
+    
+    if request.GET.get('role'):
+        data['role'] = request.GET.get('role')
+        
+  
+    if request.GET.get('sign-on1'):
+        data['signOn1'] = request.GET.get('sign-on1')
+     
+    
+    if request.GET.get('sign-on2'):
+        data['signOn2'] = request.GET.get('sign-on2')    
+        
+    
+    if request.GET.get('sign-on3'):
+        data['signOn3'] = request.GET.get('sign-on3')    
+        
+    return render(request,'formularioApp/results.html',data)

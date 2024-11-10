@@ -4,65 +4,143 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=s, initial-scale=1.0" />
 		<title>Document</title>
+		<!-- Latest compiled and minified CSS -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+		/>
+
+		<!-- Latest compiled JavaScript -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	</head>
 	<body>
 		<h3>Novell Services Login</h3>
-		<form action="">
-			<label for="username">
-				Username:
-				<input
-					type="text"
-					name="username"
-					value="{{username}}"
-				/> </label
-			><br />
-			<label for="password">
-				Password:
-				<input type="password" name="password" value="{{password}}" /> </label
-			><br />
-			<label for="city">
-				City of employement:
-				<input type="text" name="city" value="{{city}}" /> </label
-			><br />
+
+		<form action="{% url 'results'%}">
+			<div class="mb-3 mt-3">
+				<label for="username">
+					Username:
+					<input
+						type="text"
+						name="username"
+						class="form-control"
+					/> </label
+				><br />
+				<label for="password">
+					Password:
+					<input
+						type="password"
+						name="password"
+						class="form-control"
+					/> </label
+				><br />
+				<label for="city">
+					City of employement:
+					<input
+						type="text"
+						name="city"
+						class="form-control"
+					/> </label
+				><br />
+			</div>
 			<label for="web-server">
 				Web server:
-				<select name="web-server" id="web-server">
-					<option value="apache" {% if {{webServer}} is not '' %}selected="selected"{% endif %}>Apache</option>
-					<option value="nginx"{% if {{webServer}} is not '' %}selected="selected"{% endif %}>Nginx</option>
-					<option value="cloudfare"{% if {{webServer}} is not '' %}selected="selected"{% endif %}>Cloudfare</option>
+				<select name="web-server" class="form-select">
+					<option value="apache">Apache</option>
+					<option value="nginx">Nginx</option>
+					<option value="cloudfare">Cloudfare</option>
 				</select> </label
 			><br />
-			<label for="role">
+			<div class="form-check"></div>
+			<label for="role" class="form-check-label">
 				Please especify your role: <br />
-				<input type="radio" value="admin" name="role" {% if {{role}} is 'admin' %}checked{% endif %}/>
+				<input
+					type="radio"
+					value="admin"
+					name="role"
+					class="form-check-input"
+				/>
 				Admin
 				<br />
-				<input type="radio" value="engineer" name="role" {% if {{role}} is 'engineer' %}checked{% endif %} />
+				<input
+					type="radio"
+					value="engineer"
+					name="role"
+					class="form-check-input"
+				/>
 				Engineer
 				<br />
-				<input type="radio" value="manager" name="role" {% if {{role}} is 'manager' %}checked{% endif %}/>
+				<input
+					type="radio"
+					value="manager"
+					name="role"
+					class="form-check-input"
+				/>
 				Manager
-				<br>
-				<input type="radio" value="guest" name="role" {% if {{role}} is 'guest' %}checked{% endif %}/>
+				<br />
+				<input
+					type="radio"
+					value="guest"
+					name="role"
+					class="form-check-input"
+				/>
 				Guest
 				<br />
 			</label>
-			<label for="sign-on">
+			<div class="form-check mb-3"></div>
+			<label for="sign-on" class="form-check-label">
 				Single Sign-on to the following: <br />
-				<input type="checkbox" name="sign-on1" value="mail" />Mail<br />
+				<input
+					type="checkbox"
+					name="sign-on1"
+					value="mail"
+					class="form-check-input"
+				/>Mail<br />
 				<input
 					type="checkbox"
 					name="sign-on2"
 					value="payroll"
+					class="form-check-input"
 				/>Payroll<br />
 				<input
 					type="checkbox"
 					name="sign-on3"
 					value="self"
+					class="form-check-input"
 				/>Self-service<br />
 			</label>
-
-			<input type="submit" value="Login" />
+			<br />
+			<input type="submit" value="Login" class="btn btn-primary" />
 		</form>
+		{% comment %} {% if {{username}} != ''%} {% endcomment %}
+		<br /><br />
+		{% comment %}
+		<table>
+			<tr>
+				<td>Username:</td>
+				<td>{{username}}</td>
+			</tr>
+			<tr>
+				<td>Password:</td>
+				<td>{{password}}</td>
+			</tr>
+			<tr>
+				<td>City:</td>
+				<td>{{city}}</td>
+			</tr>
+			<tr>
+				<td>Web Server:</td>
+				<td>{{webServer}}</td>
+			</tr>
+			<tr>
+				<td>Role:</td>
+				<td>{{role}}</td>
+			</tr>
+			<tr>
+				<td>Sign on:</td>
+				<td>{{signOn}}</td>
+			</tr>
+		</table>
+		{% endcomment %} {% comment %} {%endif%} {% endcomment %}
 	</body>
 </html>
