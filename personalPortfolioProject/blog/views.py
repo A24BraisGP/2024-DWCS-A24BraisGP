@@ -3,8 +3,7 @@ from .models import Blog
 # Create your views here.
 def all_blogs(request):
     blogs = Blog.objects.all()
-    
-    # if request.GET.get('order'):
-    #     blogs = Blog.objects.order_by('data').all()
+    if 'submit-form-1' in request.GET:
+        blogs = Blog.objects.all().order_by('data')
     
     return render(request,'blog/all_blogs.html',{'blogs':blogs})
