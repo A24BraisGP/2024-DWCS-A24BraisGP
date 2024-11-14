@@ -11,7 +11,7 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	</head>
 	<body>
-		<h1>Brais' portfolio</h1>
+		<h1 class="display-1">Brais' portfolio</h1>
 		<div class="container mt-3">
 			{% for project in projects %}
 
@@ -27,8 +27,8 @@
 					<img
 						src="{{project.image.url}}"
 						alt="{{project.image}}"
-						width="400"
-						height="400"
+						width="100"
+						height="100"
 					/>
 				</li>
 				{%if project.url %}

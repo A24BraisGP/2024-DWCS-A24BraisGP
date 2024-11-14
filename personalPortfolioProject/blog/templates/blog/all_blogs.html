@@ -4,8 +4,55 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+			crossorigin="anonymous"
+		/>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+			crossorigin="anonymous"
+		></script>
 	</head>
 	<body>
-		bloglboglbog
+		<h1 class="display-1">BLOG ENTRIES</h1>
+		<div class="input-group mb-3">
+			{% comment %}
+			<form action="{%url 'all_blogs'%}"></form>
+			<div class="input-group-text">
+				<input
+					name="order"
+					class="form-check-input mt-0"
+					type="checkbox"
+					value="order"
+					aria-label="Checkbox for following text input"
+				/>
+				<input
+					type="submit"
+					class="btnbtn info"
+					value="Check to Order By Date"
+				/>
+			</div>
+		</div>
+		{% endcomment %}
+		<div class="container mt-3">
+			{%for blog in blogs%}
+			<ul class="list-group">
+				<li class="list-group-item">
+					<h2 class="display-2">
+						<a href="{{blog.url}}">{{blog.title}}</a>
+					</h2>
+				</li>
+				<li class="list-group-item">
+					<h5 class="display-5">{{blog.data}}</h5>
+				</li>
+				<li class="list-group-item">
+					<p>{{blog.description}}</p>
+				</li>
+			</ul>
+			{%endfor%}
+		</div>
 	</body>
 </html>
