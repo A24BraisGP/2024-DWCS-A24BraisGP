@@ -17,13 +17,13 @@
 		></script>
 	</head>
 	<body>
+		<br>
 		<div class="container mt-3">
-			<h1 class="display-1">BLOG ENTRIES</h1>
-			{%for blog in blogs%}
+			<h1 class="display-1">BLOG ENTRY {{blog.id}}</h1>
 			<ul class="list-group">
 				<li class="list-group-item">
 					<h2 class="display-2">
-						<a href="">{{blog.title}}</a>
+						{{blog.title}}
 					</h2>
 				</li>
 				<li class="list-group-item">
@@ -33,7 +33,6 @@
 					<p>{{blog.description}}</p>
 				</li>
 			</ul>
-			{%endfor%}
-		</div>
+	
 	</body>
 </html>
