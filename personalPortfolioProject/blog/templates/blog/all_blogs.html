@@ -23,7 +23,9 @@
 			<ul class="list-group">
 				<li class="list-group-item">
 					<h2 class="display-2">
-						<a href="">{{blog.title}}</a>
+						<a href="{% url 'blog:detail' blog.id %}"
+							>{{blog.title}}</a
+						>
 					</h2>
 				</li>
 				<li class="list-group-item">
