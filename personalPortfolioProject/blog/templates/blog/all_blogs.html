@@ -18,25 +18,6 @@
 	</head>
 	<body>
 		<h1 class="display-1">BLOG ENTRIES</h1>
-		<div class="input-group mb-3">
-			{% comment %}
-			<form action="{%url 'all_blogs'%}"></form>
-			<div class="input-group-text">
-				<input
-					name="order"
-					class="form-check-input mt-0"
-					type="checkbox"
-					value="order"
-					aria-label="Checkbox for following text input"
-				/>
-				<input
-					type="submit"
-					class="btnbtn info"
-					value="Check to Order By Date"
-				/>
-			</div>
-		</div>
-		{% endcomment %}
 		<div class="container mt-3">
 			{%for blog in blogs%}
 			<ul class="list-group">
