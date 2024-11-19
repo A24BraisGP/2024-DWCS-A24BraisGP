@@ -1,6 +1,12 @@
 <!DOCTYPE html>
+{%load static%}
 <html lang="en">
 	<head>
+		<link
+			rel="icon"
+			type="image/icon"
+			href="{% static 'portfolio/icons8-dog-32.png'%}"
+		/>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
@@ -19,13 +25,15 @@
 	<body>
 		<div class="container mt-3">
 			<h1 class="display-1">BLOG ENTRIES</h1>
-			<p>
+			<br />
+			<p class="text-center">
 				<a
 					href="/"
 					class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
 					>Link to my projects</a
 				>
 			</p>
+			<br />
 			{%for blog in blogs%}
 			<ul class="list-group">
 				<li class="list-group-item">
