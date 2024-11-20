@@ -1,8 +1,8 @@
 {%extends 'portfolio/base.html'%} {% block content %} {%load static%}
 <div class="container mt-3">
-	<h1 class="display-1">Brais' portfolio</h1>
+	<h1 class="display-1">Brais Garcia's Personal Projects</h1>
 
-	<div class="card" style="width: 18rem">
+	<div class="card mx-auto" style="width: 18rem">
 		<img
 			src="{% static 'portfolio/7609718834_416d41c0af_w.jpg'%}"
 			alt="Happy dog with it's tongue out"
@@ -15,7 +15,7 @@
 			</p>
 		</div>
 	</div>
-
+<br><br>
 	{% comment %}
 	<a href="{% static 'portfolio/UD0 - Estrutura real.pdf'%}" target="_blank"
 		>UD0 - Estrutura real</a
@@ -38,32 +38,36 @@
 				}
 			</script>
 			<img
+				class="rounded mx-auto d-block"
 				src="{{project.image.url}}"
 				alt="{{project.image}}"
-				width="100"
-				height="100"
+				width="150"
+				height="150"
 				onClick="bark()"
 			/>
 			{%elif project.url%}
 			<li class="list-group-item">
 			<a href="{{project.url}}"
 				><img
+					class="rounded mx-auto d-block"
 					src="{{project.image.url}}"
 					alt="{{project.image}}"
-					width="100"
-					height="100"
+					width="150"
+					height="150"
 			/></a>
 		</li>
 		{% else %}
 			<img
+				class="rounded mx-auto d-block"
 				src="{{project.image.url}}"
 				alt="{{project.image}}"
-				width="100"
-				height="100"
+				width="150"
+				height="200"
 			/>
 			{% endif %}
 		</li>
 	</ul>
+	<br><br>
 	{% endfor %}
 </div>
 {% endblock%}
