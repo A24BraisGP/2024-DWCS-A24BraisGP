@@ -1,0 +1,32 @@
+{%extends 'detail/base.html'%} {%load static%} {%block content%}
+<h1>Game details:</h1>
+<br />
+
+<div class="card mx-auto" style="max-width: 540px">
+	<div class="row g-0">
+		<div class="col-md-4">
+			{% comment %} TODO centrar imagen {% endcomment %}
+			<img
+				src="{{game.cover.url}}"
+				class="img-fluid rounded-start"
+				alt="{{game.title}}"
+			/>
+		</div>
+		<hr class="border border-primary border-3 opacity-75" />
+		<div class="col-md-8">
+			<div class="card-body">
+				<h5 class="card-title">{{game.title}}</h5>
+				<p class="card-text">{{detail.description}}</p>
+				<p class="card-text">
+					<small class="text-body-secondary"
+						>This game recieved a {{detail.score}} / 10</small
+					>
+				</p>
+				{% comment %} TODO poner developer y link a su página {%
+				endcomment %}
+			</div>
+		</div>
+	</div>
+</div>
+
+{%endblock%}

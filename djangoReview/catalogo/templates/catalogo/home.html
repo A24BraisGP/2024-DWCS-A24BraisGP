@@ -1,3 +1,32 @@
 {%extends 'catalogo/base.html'%}{%block content%} {%load static%}
-<p>AAAAAAAAAAA</p>
-{%endblock%}
+
+</div>
+<h1 class='display-1'>Games info:</h1>
+{%for game in games %}
+<div class="card mb-3 mx-auto" style="max-width: 540px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <a href="">
+		<img
+			src="{{game.cover.url}}"
+			class="card-img-top"
+			alt="{{game.title}} click to go to the details"
+	/></a>
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+   <h5 class="card-title">{{game.title}}</h5>
+        <p class="card-text">
+			{{game.description}}</p>
+          
+        <p class="card-text"><small class="text-body-secondary">Tag for diversity : {{game.diversity}}
+</small></p>
+<a href="detail/{{game.id}}" class="btn btn-primary" target="_blank">Go to details</a>
+{% if game.trailer %}
+    <a href="{{game.trailer}}" class="btn btn-primary" target="_blank">Watch the trailer</a> 
+{% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{%endfor%} {%endblock%}

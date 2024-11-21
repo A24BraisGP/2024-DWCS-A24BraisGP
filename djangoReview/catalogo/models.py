@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
-class Opinion(models.Model):
+class Detail(models.Model):
   score = models.IntegerField(
     validators=[
       MinValueValidator(1),
@@ -10,14 +10,16 @@ class Opinion(models.Model):
     ]
   )
   description = models.TextField(blank=True, max_length=1500)
+  developer= models.CharField(blank=True, max_length=50)
+  developerPage = models.URLField(blank=True)
   
   
 class Game(models.Model):
-  VISUAL = "VI"
-  MOTOR = "MO"
-  COGNITIVE = "CO"
-  HEARING = "HE"
-  SENSORY = "SE"
+  VISUAL = "Visual"
+  MOTOR = "Motor"
+  COGNITIVE = "Cognitive"
+  HEARING = "Hearing"
+  SENSORY = "Sensory"
   DIVERSITY_TYPE = [
     (VISUAL, "Visual"),
     (MOTOR, "Motor"),
@@ -28,7 +30,6 @@ class Game(models.Model):
   title = models.CharField(max_length=500)
   cover = models.ImageField(upload_to='catalogo/images')
   diversity = models.CharField(choices=DIVERSITY_TYPE, default=VISUAL,max_length=10)
-  description = models.TextField(max_length=1500)
-  opinion = models.ForeignKey(Opinion, on_delete=models.CASCADE, null=True, blank=True)
-  trailer_url = models.URLField(blank=True)
+  description = models.TextField(max_length=150)
+  trailer = models.URLField(blank=True)
   
