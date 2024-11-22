@@ -10,8 +10,11 @@ class Detail(models.Model):
     ]
   )
   description = models.TextField(blank=True, max_length=1500)
+  #TODO tamén multivaluado
   developer= models.CharField(blank=True, max_length=50)
   developerPage = models.URLField(blank=True)
+  # TODO prices táboa con web scraping sobre os prezos dos xogos
+  # TODO plataformas es otro atributo multivaluado
   
   
 class Game(models.Model):

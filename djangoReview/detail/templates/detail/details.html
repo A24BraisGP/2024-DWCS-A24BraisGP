@@ -1,32 +1,43 @@
 {%extends 'detail/base.html'%} {%load static%} {%block content%}
-<h1>Game details:</h1>
+<div class="d-flex justify-content-center">
+	<h1 class="display-1">{{game.title}} details:</h1>
+</div>
 <br />
 
 <div class="card mx-auto" style="max-width: 540px">
-	<div class="row g-0">
-		<div class="col-md-4">
-			{% comment %} TODO centrar imagen {% endcomment %}
+	<div class="row g-0 justify-content-center">
+		<div class="col-md-4" style="margin-bottom: 10px">
 			<img
 				src="{{game.cover.url}}"
 				class="img-fluid rounded-start"
 				alt="{{game.title}}"
 			/>
 		</div>
-		<hr class="border border-primary border-3 opacity-75" />
+
+		<hr class="border-primary border-3 opacity-75" />
 		<div class="col-md-8">
 			<div class="card-body">
-				<h5 class="card-title">{{game.title}}</h5>
-				<p class="card-text">{{detail.description}}</p>
+				<h5 class="card-title">
+					Title: 
+					{{game.title}}
+					<p class="card-text">
+						<small class="text-body-secondary"
+							>This game recieved a {{detail.score}} / 10</small
+						>
+					</p>
+					<p class="card-text">Developer: {{detail.developer}}</p>
+					{% if detail.developerPage %}
+					<p class="card-text">
+						<a href="{{detail.developerPage}}" target="_blank" class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Link to the page of
+						the developer</a>
+					</p>
+					{% endif %}
+				</h5>
 				<p class="card-text">
-					<small class="text-body-secondary"
-						>This game recieved a {{detail.score}} / 10</small
-					>
+					<h6 class="card-title">Description:</h6>{{detail.description}}
 				</p>
-				{% comment %} TODO poner developer y link a su página {%
-				endcomment %}
 			</div>
 		</div>
 	</div>
 </div>
-
 {%endblock%}

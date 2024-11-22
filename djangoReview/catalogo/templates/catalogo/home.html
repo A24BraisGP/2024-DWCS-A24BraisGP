@@ -1,12 +1,28 @@
 {%extends 'catalogo/base.html'%}{%block content%} {%load static%}
 
+<div class="d-flex justify-content-center">
+<form action="#" method="get">
+<div class="form-floating" style="width:50vw">
+  
+  <select class="form-select" id="filter" aria-label="Floating label select example" name="filter" style="margin-top: 3px">
+    <option value="Visual">Visual</option>
+    <option value="Cognitive">Cognitive</option>
+    <option value="Motor">Motor</option>
+    <option value="Hearing">Hearing</option>
+    <option value="Sensory">Sensory</option>
+    <option value="All">Show All Games</option>
+  </select>
+  <label for="filter" class="form-label">Select the diversity which you want to filter games by: </label>
+  <input type="submit" class="btn btn-info" value="Search" style="margin-top: 3px">
+</form>
 </div>
-<h1 class='display-1'>Games info:</h1>
+</div>
+<br><br><br>
 {%for game in games %}
 <div class="card mb-3 mx-auto" style="max-width: 540px;">
   <div class="row g-0">
     <div class="col-md-4">
-      <a href="">
+      <a href="detail/{{game.id}}" targeT="_blank">
 		<img
 			src="{{game.cover.url}}"
 			class="card-img-top"
