@@ -32,6 +32,7 @@ class Game(models.Model):
   ]
   title = models.CharField(max_length=500)
   cover = models.ImageField(upload_to='catalogo/images')
+  #TODO outra táboa para darlle múltiples diversities a cada xogo, xa que unha obra pode cubrir varias accesibilidades.
   diversity = models.CharField(choices=DIVERSITY_TYPE, default=VISUAL,max_length=10)
   description = models.TextField(max_length=150)
   trailer = models.URLField(blank=True)

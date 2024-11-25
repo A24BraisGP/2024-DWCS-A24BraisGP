@@ -6,3 +6,4 @@ app_name = 'detail'
 urlpatterns = [
     path('<int:game_id>/',views.detail,name="detail")
 ]
+    

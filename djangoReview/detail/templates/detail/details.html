@@ -4,7 +4,7 @@
 </div>
 <br />
 
-<div class="card mx-auto" style="max-width: 540px">
+<div class="card mx-auto" style="max-width: 50vw">
 	<div class="row g-0 justify-content-center">
 		<div class="col-md-4" style="margin-bottom: 10px">
 			<img
@@ -34,7 +34,9 @@
 					{% endif %}
 				</h5>
 				<p class="card-text">
-					<h6 class="card-title">Description:</h6>{{detail.description}}
+					<h6 class="card-title">Description:</h6>
+					<p class="lh-lg">{{detail.description|wordwrap:50}}
+					</p>
 				</p>
 			</div>
 		</div>
