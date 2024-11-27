@@ -1,8 +1,15 @@
+#Sintax to declare a python class
+#The method have at least the self argument
+
 class Person:
+  
+  # Constructor method. 
   def __init__(self,name,email,telephone):
     self.name = name
     self.email = email 
     self.telephone= telephone 
+    
+    #To string method 
   def __str__(self):
     return f'Name : {self.name} -- Email : {self.email} -- Telephone : {self.telephone}'
   
@@ -17,22 +24,26 @@ class Product:
     return f'Name : {self.name} -- Description : {self.description} -- Price : {self.price} -- Image : {self.image}'
   
 class Order:
+  
+  #In this case, both client and list of products will be instatiation of the classes above, but will be when we initiate Order with that data
   def __init__(self,date,list_of_products,client):
     self.date = date
     self.list_of_products = list_of_products
     self.client = client
     
   def __str__(self):
-    text = "Date :"+ self.date + "\n" +"List of products :"
+    text = "Date :"+ self.date + "\n" +"List of products :" + "\n"
     for product in self.list_of_products:
-      text += "\t" + str(product) + "\n"
+      text += "\t{" + str(product) + "}\n"
     text += "Client: {" + str(self.client) + "}"
     return text 
+  
+  #Auxiliar method that iterates by every item in the list of products and access individually every price atribute of said product in the list in order to sum them to a final total price
   
   def get_total(self):
     total = 0
     for product in self.list_of_products:
-      total += product.price
+      total += float(product.price)
     return total
   
   
@@ -45,4 +56,4 @@ list_of_products = [product1, product2, product3]
 
 order = Order('1999-2-22',list_of_products,person1)
 print(order)
-print('The total is ' + str(order.get_total()))
+print(f'The total is {str(order.get_total())} €')
