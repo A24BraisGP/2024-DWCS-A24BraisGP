@@ -2,6 +2,7 @@
 #The method have at least the self argument
 
 class Person:
+  # if we wanted class variables we would have to declare them outside of the constructor
   
   # Constructor method. 
   def __init__(self,name,email,telephone):
