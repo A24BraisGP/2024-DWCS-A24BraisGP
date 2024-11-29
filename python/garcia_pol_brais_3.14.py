@@ -42,6 +42,8 @@ def merge_dictionaries(dict1, dict2):
   print(f'Sorted merged dictionary: {sorted_dict}')
   return sorted_dict  
 
+# Jose fíxoo así : return dict_one | dict_two
+
 merge_dictionaries(products,product2)
 
 
