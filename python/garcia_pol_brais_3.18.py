@@ -23,6 +23,7 @@ class Book:
   def __str__(self):
     text = f'Title : {self.title} -- Author: {self.author} -- '
     text += 'Is avaliable' if self.avaliable else 'Is not avaliable'
+    text += '\n-------------\n'
     return text
   
 class Library:
@@ -81,10 +82,14 @@ book5 = Book('Niebla','Miguel de Unamuno',False)
 list_of_books = [book1,book2,book3,book4,book5]
 library1 = Library(list_of_books)
 
-
+print('----------Borrow Niebla ---------------')
 library1.borrow_book('Niebla')
 print(library1)
+print('----------Return Niebla ---------------')
 library1.return_book('Niebla')
+print(library1)
+print('----------Borrow Niebla after returning ---------------')
+library1.borrow_book('Niebla')
 print(library1)
 
 #A book that doesn't exist
