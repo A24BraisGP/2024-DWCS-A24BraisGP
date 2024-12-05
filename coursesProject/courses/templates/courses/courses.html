@@ -1,0 +1,15 @@
+{%extends 'courses/base.html'%} {%load static%} {%block content%}
+<h2>Imagen:</h2>
+<br />
+{%for course in courses%}
+
+<div class="card" style="width: 18rem">
+	<img src="{{course.image.url}}" class="card-img-top" alt="..." />
+	<div class="card-body">
+		<h5 class="card-title">{{course.title}}</h5>
+		<a href="courses_detail/{{course.id}}" class="btn btn-primary"
+			>Go to details</a
+		>
+	</div>
+</div>
+{%endfor%} {%endblock%}

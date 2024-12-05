@@ -74,6 +74,8 @@ class Library:
     except BookNotFoundException as err:        
       print(f'\n EXCEPTION: {err} \n')
 
+
+
 book1 = Book('Hamlet','Shakespeare',True)
 book2 = Book('Romeo and Juliet','Shakespeare',True)
 book3 = Book('Poeta en Nueva York','Federico García Lorca',False)
@@ -91,6 +93,8 @@ print(library1)
 print('----------Borrow Niebla after returning ---------------')
 library1.borrow_book('Niebla')
 print(library1)
+
+library1.avaliable_books()
 
 #A book that doesn't exist
 library1.return_book('AAAAAAA')
