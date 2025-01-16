@@ -1,0 +1,10 @@
+{% extends 'repaso/base.html'%} {%block content%}
+<h1>{{book.title}}</h1>
+<h2>{{book.author}}</h2>
+<h5>Rating was {{book.rating}}</h5>
+<h6>
+	It was {%if book.is_bestselling%} a bestseller!! {%else%} not a bestseller
+	:( {%endif%}
+</h6>
+<a href="/"> Come back</a>
+{%endblock%}

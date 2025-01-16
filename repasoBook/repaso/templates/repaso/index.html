@@ -1,0 +1,16 @@
+{%extends 'repaso/base.html'%} {%block content%}
+<h1>Libros</h1>
+<ul>
+	{% for book in books %}
+	<li>
+		<a href="{%url 'book_detail' book.slug%}">
+			<h3>{{book.title}} -- {{book.author}} {{book.slug}}</h3></a
+		>
+	</li>
+	{% endfor %}
+</ul>
+
+<hr />
+
+<h2>Average rating was:</h2>
+{%endblock%}
