@@ -20,6 +20,6 @@ from repaso import views
 
 urlpatterns = [
     path('',views.index),
-    path('<slug:slug>',views.book_detail,name='book_detail'),
+    path('<slug:slug>',views.book_detail,name='book-detail'),
     path('admin/', admin.site.urls),
 ]
