@@ -1,0 +1,12 @@
+{{post}}
+
+<hr />
+
+<a href="{{post.author.email_addres}}">Mail to: {{post.author.first_name}}</a>
+<hr />
+
+<hr />
+{% for tag in post.tag %}
+<div>{{post.tags.caption}}</div>
+{% endfor %}
+<a href="/">Come Back</a>
