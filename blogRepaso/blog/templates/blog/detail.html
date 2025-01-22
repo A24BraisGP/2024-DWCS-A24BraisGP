@@ -1,12 +1,41 @@
-{{post}}
+{%extends 'blog/base.html'%} {%load static%} {%block content%}
+<div class="d-flex container mx-auto justify-content-center">
+	<h2 class="display-2">{{post.title}}</h2>
+</div>
+<hr class="hr-color border border-info border-2 opacity-50" />
+<div class="d-flex container mx-auto justify-content-center">
+	<img
+		src="/static/blog/{{post.image_name}}"
+		alt="{{post.image_name}}"
+		width="480"
+		height="290"
+	/>
+</div>
+<hr class="border border-info border-2 opacity-50 hr-color" />
+<div class="d-flex container mx-auto justify-content-center">
 
-<hr />
+{{post.content}}
+</div>
+<hr class="border border-info border-2 opacity-50 hr-color" />
+<div class="d-flex container mx-auto justify-content-center">
+  <ul class="list-group">
+  {%for tag in post.tags.all%}
+    <li class="list-group-item">{{tag}}</li>
+  {%endfor%}
+  </ul>
+</div>
 
-<a href="{{post.author.email_addres}}">Mail to: {{post.author.first_name}}</a>
-<hr />
+<hr class="border border-info border-2 opacity-50 hr-color" />
+<div class="d-flex container mx-auto justify-content-center">
+	<a href="mailto:{{post.author.email_addres}}"
+		>Mail to: {{post.author.first_name}} {{post.author.last_name}}</a
+	>
 
-<hr />
-{% for tag in post.tag %}
-<div>{{post.tags.caption}}</div>
-{% endfor %}
-<a href="/">Come Back</a>
+</div>
+<hr class="border border-info border-2 opacity-50 hr-color" />
+  <div class="d-flex container mx-auto justify-content-center">
+
+	<a href="/">Come Back</a>
+  </div>
+</div>
+{%endblock%}

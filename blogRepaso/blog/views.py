@@ -8,9 +8,13 @@ def home(request):
   
   
   return render(request, 'blog/home.html',{
-    'post_by_date':post_by_date
+    'posts':post_by_date
   })
 
 def detail(request, slug):
   post = get_object_or_404(Post, slug=slug)
   return render (request, 'blog/detail.html',{'post':post})
+
+def all(request):
+  posts = Post.objects.all()
+  return render(request,'blog/all-post.html',{"posts":posts} )

@@ -20,6 +20,7 @@ from blog import views
 
 urlpatterns = [
     path('', views.home),
+    path('all/',views.all, name="all"),
     path('<slug:slug>', views.detail, name='post-detail'),
     path('admin/', admin.site.urls),
 ]

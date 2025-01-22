@@ -1,0 +1,13 @@
+<div class="d-flex container mx-auto justify-content-center">
+	<ul>
+{%for post in posts%}
+<li>
+	<h4>
+		<a href="{{post.get_absolute_url}}">{{post.title}}</a>
+	</h4>
+	<p class="text-center fs-5">{{post.excerpt}}</p>
+	<p class="text-center fs-6">{{post.date|date:'F jS Y'}}</p>
+</li>
+{%endfor%}
+</div>
+</ul>
