@@ -4,7 +4,7 @@ from .models import Post,Author,Tag
 # Create your views here.
 def home(request):
   posts = Post.objects.all()
-  post_by_date = posts.order_by('-date')[:3]
+  post_by_date = posts.order_by('date')[:3]
   
   
   return render(request, 'blog/home.html',{
