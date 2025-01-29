@@ -7,5 +7,8 @@
 	</head>
 	<body>
 		<h1>THANK YOU</h1>
+		{%if novell_response%} {% for field in novell_response %}
+		<p>{{field}}</p>
+		{% endfor %} {%endif%}
 	</body>
 </html>
