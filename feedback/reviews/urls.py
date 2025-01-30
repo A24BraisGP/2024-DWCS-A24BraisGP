@@ -17,9 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from . import views
+from .views import ReviewView
 
 
 urlpatterns = [
-    path('',views.reviews),
+    path('',views.ReviewView.as_view()),
     path('thank-you',views.thank_you,name='thank_you')
 ]
