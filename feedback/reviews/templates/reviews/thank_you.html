@@ -4,8 +4,29 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
+		<style>
+			tr,
+			td {
+				border-right: 1px solid black;
+				padding: 5px;
+			}
+		</style>
 	</head>
 	<body>
 		<h1>THANK YOU</h1>
+		<table>
+			<tbody>
+				<tr>
+					{%for field in novell_form%}
+					<td>{{field.label_tag}}</td>
+					{%endfor%}
+				</tr>
+				<tr>
+					{%for key, value in novell_response.items%}
+					<td>{{value}}</td>
+					{%endfor%}
+				</tr>
+			</tbody>
+		</table>
 	</body>
 </html>

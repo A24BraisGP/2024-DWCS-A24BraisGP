@@ -1,14 +1,6 @@
 from django import forms
 from .models import Review, Novell
 
-# class ReviewForm(forms.Form):
-#   user_name = forms.CharField(label="Your name",required=True,max_length=10,error_messages={
-#     'required':'O campo non pode quedar baleiro',
-#     'max_length': f'O campo non pode ter máis de 10 caracteres o teu ten'
-#   })
-#   review_text = forms.CharField(label="Your feedback", widget=forms.Textarea, max_length=200)
-#   rating = forms.IntegerField(label="Your Rating", min_value=1, max_value=5)
-  
 class ReviewForm(forms.ModelForm):
   class Meta: 
     model = Review
@@ -26,22 +18,20 @@ class ReviewForm(forms.ModelForm):
         'max_length':'Pasacheste de largo'
       }
     }
-    
-#EXEMPLO do uso de widgets no modelform
-class SmartPhoneForm(forms.ModelForm):
-  class Meta:
-        model = Phone
-        fields = ['smart_phone_ownership', 'smart_phone_usage']
-        widgets = {
-            'smart_phone_ownership': forms.RadioSelect,
-            'smart_phone_usage': forms.Select,
-        }
-        
+
 class NovellForm(forms.ModelForm):
   class Meta: 
-    model = NovellForm
+    model = Novell
     fields = '__all__'
+    labels={
+      'user_name' : 'User name',
+      'password': 'Password',
+      'city': 'City',
+      'web_server': 'Web Server',
+      'role': 'Role',
+    }
     widgets = {
+      'password': forms.PasswordInput,
       'role': forms.RadioSelect,
       'sign_in': forms.CheckboxSelectMultiple
     }
