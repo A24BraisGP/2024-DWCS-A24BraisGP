@@ -1,5 +1,5 @@
 from django import forms
-from .models import Review, Novell
+from .models import Review, Student
 
 class ReviewForm(forms.ModelForm):
   class Meta: 
@@ -19,19 +19,21 @@ class ReviewForm(forms.ModelForm):
       }
     }
 
-class NovellForm(forms.ModelForm):
-  class Meta: 
-    model = Novell
+class StudentForm(forms.ModelForm):
+  class Meta:
+    model = Student
     fields = '__all__'
-    labels={
-      'user_name' : 'User name',
-      'password': 'Password',
-      'city': 'City',
-      'web_server': 'Web Server',
-      'role': 'Role',
+    labels ={
+      'name' : 'Name',
+      'degree' : 'Degree'
     }
-    widgets = {
-      'password': forms.PasswordInput,
-      'role': forms.RadioSelect,
-      'sign_in': forms.CheckboxSelectMultiple
+    error_messages = {
+      'name':{
+          'required':'O campo é requerido',
+          'max_length':'Pasacheste de largo'
+      },
+      'degree':{
+          'required':'O campo é requerido',
+          'max_length':'Pasacheste de largo'
+      }
     }

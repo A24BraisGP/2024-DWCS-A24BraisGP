@@ -3,6 +3,7 @@
 {% block title %}Your Review{% endblock %}
 
 {% block content %}
+<h1>UPDATE STUDENT {{student.name}}</h1>
   <form action="/" method="POST">
     {% csrf_token %}
     {% for field in form %}
@@ -12,8 +13,8 @@
         {{ field.errors }}
       </div>
     {% endfor %}
-    <button type="submit">Send</button>
+    <button type="submit">SAVE UPDATE</button>
   </form>
 
-  <a href="review_list">Review List</a>
+  <a href="student_list">Show all Students</a>
 {% endblock %}

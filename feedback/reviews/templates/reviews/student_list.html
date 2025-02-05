@@ -1,0 +1,12 @@
+{%extends 'reviews/base.html'%} {% block title %}
+Review List{% endblock title %}
+{%block content%}
+<h1>Student List Click to UPDATE</h1>
+<ul>
+{% for student in student_list  %}
+  <li>
+    <a href="{%url 'update' student.id%}">{{student.name  }} : {{student.degree}} </a>
+</li>
+{% endfor %}
+</ul>
+{%endblock%}

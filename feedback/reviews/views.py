@@ -1,44 +1,95 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .forms import ReviewForm, NovellForm
-from .models import Review,Novell
+from .forms import ReviewForm, StudentForm
+from .models import Review, Student
 from django.views import View
+from django.views.generic.base import TemplateView
+from django.shortcuts import get_object_or_404
+import random
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import FormView, CreateView, UpdateView,DeleteView
 
 # Create your views here.
 
-class ReviewView(View):
-  def get(self, request):
-    form = ReviewForm()
-    novell_form = NovellForm()
-    
-    return render(request, 'reviews/review.html',{
-    'form':form,    
-    'novell_form':novell_form
-    })
-    
-  def post(self, request):
-    # existing_data = Review.objects.get(id=1)
-    # form = ReviewForm(request.POST
-                      # instance=existing_data
-                      # )
-    # if form.is_valid():
-    #   print(form)
-    #   form.save()
-    #   return HttpResponseRedirect('/thank-you')
-    
-    novell_form = NovellForm(request.POST)
-    print('check')
-    if novell_form.is_valid():
-      novell_form.save()
-    return render(request, 'reviews/thank_you.html',
-                      {'novell_response':{
-                        'user_name': novell_form.cleaned_data['user_name'],
-                        'password':novell_form.cleaned_data['password'],
-                        'city': novell_form.cleaned_data['city'],
-                        'web_server': novell_form.cleaned_data['web_server'],
-                        'role': novell_form.cleaned_data['role']          
-                      },'novell_form':novell_form})
+# class ReviewView(FormView):
+#   form_class = ReviewForm
+#   template_name = 'reviews/review.html'
+#   success_url = '/thank_you'
+  
+#   def form_valid(self, form):
+#       form.save()
+#       return super().form_valid(form)
+
+# Garda automaticamente na base de datos cando temos un model Form
+class ReviewView(CreateView):
+  model = Review
+  form_class = ReviewForm
+  template_name = 'reviews/review.html'
+  success_url = '/thank_you'
+  
+class ThankYouView(TemplateView):
+  template_name = 'reviews/thank_you.html'
+  
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    message = 'This works!'
+    context["message"] = message
+    print(context)
+    return context
+
+class ReviewListView(ListView):
+  template_name = 'reviews/review_list.html'
+  model = Review
+  context_object_name = "review_list"
+
+  # se queremos ordear a listaxe de obxectos traidos pela listview
+  
+  def get_queryset(self):
+    base_query =  super().get_queryset()
+    data = base_query.order_by('-rating')
+    return data
+  
+class SingleReviewView(DetailView):
+  template_name = 'reviews/single_review.html'
+  model = Review
+  
+  #por ser queremos cambialo nome do obxecto que pasamos 
+  
+  context_object_name = 'review'
+  
+  # def get_context_data(self, **kwargs):
+  #     objectId = kwargs['id']
+  #     context = super().get_context_data(**kwargs)
+  #     review = get_object_or_404(Review, id=objectId)
+  #     context["single_review"] = review
+  #     return context
 
 
-def thank_you(request):
-  return render(request,'reviews/thank_you.html')
+class StudentView(CreateView):
+  model = Student
+  form_class = StudentForm
+  template_name = 'reviews/student.html'
+  success_url = '/student_list'
+  
+  
+  
+class StudentList(ListView):
+  template_name = 'reviews/student_list.html'
+  model = Student
+  context_object_name = 'student_list'
+  
+  def get_queryset(self):
+    base_query =  super().get_queryset()
+    data = base_query.order_by('name')
+    return data
+  
+class StudentUpdate(UpdateView):
+  model = Student
+  fields = ['name', 'degree']
+  template_name = 'reviews.student_update.html'
+  success_url = ''  
+  
+  
+class StudentDelete(DeleteView):
+  model = Student
+  success_url = 'reviews/student_deleted.html'
