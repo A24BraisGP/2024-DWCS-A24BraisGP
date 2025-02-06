@@ -88,7 +88,7 @@ class StudentList(ListView):
 class StudentUpdateView(UpdateView):
   model = Student
   form_class = StudentForm
-  template_name = 'reviews/student.html'
+  template_name = 'reviews/student_update.html'
   success_url = reverse_lazy('student-list') 
   
 class StudentDeleteView(DeleteView):

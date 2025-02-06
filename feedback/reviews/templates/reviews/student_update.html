@@ -1,10 +1,10 @@
 {% extends "reviews/base.html" %}
 
-{% block title %}Your Review{% endblock %}
+{% block title %}Update Student{% endblock %}
 
 {% block content %}
 <h1>UPDATE STUDENT {{student.name}}</h1>
-  <form action="/" method="POST">
+  <form action="/" method="">
     {% csrf_token %}
     {% for field in form %}
       <div class="form-control {% if field.errors %}errors{% endif %}">
