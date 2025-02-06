@@ -9,6 +9,8 @@ import random
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormView, CreateView, UpdateView,DeleteView
 
+from django.urls import reverse_lazy
+
 # Create your views here.
 
 # class ReviewView(FormView):
@@ -21,41 +23,41 @@ from django.views.generic.edit import FormView, CreateView, UpdateView,DeleteVie
 #       return super().form_valid(form)
 
 # Garda automaticamente na base de datos cando temos un model Form
-class ReviewView(CreateView):
-  model = Review
-  form_class = ReviewForm
-  template_name = 'reviews/review.html'
-  success_url = '/thank_you'
+# class ReviewView(CreateView):
+#   model = Review
+#   form_class = ReviewForm
+#   template_name = 'reviews/review.html'
+#   success_url = '/thank_you'
   
-class ThankYouView(TemplateView):
-  template_name = 'reviews/thank_you.html'
+# class ThankYouView(TemplateView):
+#   template_name = 'reviews/thank_you.html'
   
-  def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)
-    message = 'This works!'
-    context["message"] = message
-    print(context)
-    return context
+#   def get_context_data(self, **kwargs):
+#     context = super().get_context_data(**kwargs)
+#     message = 'This works!'
+#     context["message"] = message
+#     print(context)
+#     return context
 
-class ReviewListView(ListView):
-  template_name = 'reviews/review_list.html'
-  model = Review
-  context_object_name = "review_list"
+# class ReviewListView(ListView):
+#   template_name = 'reviews/review_list.html'
+#   model = Review
+#   context_object_name = "review_list"
 
-  # se queremos ordear a listaxe de obxectos traidos pela listview
+#   # se queremos ordear a listaxe de obxectos traidos pela listview
   
-  def get_queryset(self):
-    base_query =  super().get_queryset()
-    data = base_query.order_by('-rating')
-    return data
+#   def get_queryset(self):
+#     base_query =  super().get_queryset()
+#     data = base_query.order_by('-rating')
+#     return data
   
-class SingleReviewView(DetailView):
-  template_name = 'reviews/single_review.html'
-  model = Review
+# class SingleReviewView(DetailView):
+#   template_name = 'reviews/single_review.html'
+#   model = Review
   
   #por ser queremos cambialo nome do obxecto que pasamos 
   
-  context_object_name = 'review'
+  # context_object_name = 'review'
   
   # def get_context_data(self, **kwargs):
   #     objectId = kwargs['id']
@@ -83,13 +85,17 @@ class StudentList(ListView):
     data = base_query.order_by('name')
     return data
   
-class StudentUpdate(UpdateView):
+class StudentUpdateView(UpdateView):
   model = Student
-  fields = ['name', 'degree']
-  template_name = 'reviews.student_update.html'
-  success_url = ''  
+  form_class = StudentForm
+  template_name = 'reviews/student.html'
+  success_url = reverse_lazy('student-list') 
   
-  
-class StudentDelete(DeleteView):
+class StudentDeleteView(DeleteView):
   model = Student
-  success_url = 'reviews/student_deleted.html'
+  template_name = 'reviews/student_deleted.html'
+  success_url = reverse_lazy('student-list')
+  
+class SingleStudentView(DetailView):
+  template_name = 'reviews/single_student.html'
+  model = Student

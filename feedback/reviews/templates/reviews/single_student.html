@@ -1,0 +1,13 @@
+{%extends 'reviews/base.html'%} {% block title %}
+Student {% endblock title %}
+{%block content%}
+<h1>Student NAME AND DEGREEs</h1>
+<ul>
+  <li>
+{{student.name  }} : {{student.degree}} 
+</li>
+
+</ul>
+<a href="{% url 'update' student.id %}">CLICK TO UPDATE</a>
+<a href="{% url 'delete' student.id %}">CLICK TO DELETE</a>
+{%endblock%}
