@@ -124,3 +124,5 @@ MEDIA_URL = '/user-media/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+#so sessions last 5 minutes
+SESSION_COOKIE_AGE = 5*60
