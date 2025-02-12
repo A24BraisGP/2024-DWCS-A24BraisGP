@@ -1,19 +1,12 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Post,Author,Tag
+from .models import Post,Comment
+from .forms import CommentForm
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
-from django.views.generic import DetailView
+from django.views import View
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
-# # Create your views here.
-
-# def home(request):
-#   posts = Post.objects.all()
-#   post_by_date = posts.order_by('date')[:3]
-  
-  
-#   return render(request, 'blog/home.html',{
-#     'posts':post_by_date
-#   })
 
 class MainBlogPage(TemplateView):
   template_name = 'blog/home.html'
@@ -24,18 +17,33 @@ class MainBlogPage(TemplateView):
       return context
   
 
-# def detail(request, slug):
-#   post = get_object_or_404(Post, slug=slug)
-#   return render (request, 'blog/detail.html',{'post':post})
 
-class DetailBlog(DetailView):
-  template_name = 'blog/detail.html'
-  model = Post
-  
 
-# def all(request):
-#   posts = Post.objects.all()
-#   return render(request,'blog/all-post.html',{"posts":posts} )
+class DetailBlog(View):
+
+  def get(self, request,slug):
+    post = Post.objects.get(slug=slug)
+    context = {
+      'post':post,
+      'comment_form' : CommentForm(),
+      'comments': Comment.objects.filter(post=post).order_by('-id')
+    }
+    return render(request, 'blog/detail.html',context)
+    
+  def post(self,request,slug):
+    comment_form = CommentForm(request.POST)
+    post = Post.objects.get(slug=slug)
+    if comment_form.is_valid():
+      comment = comment_form.save(commit=False)
+      comment.post = post
+      comment.save()
+      return HttpResponseRedirect(reverse('post-detail',args=[slug]))
+
+    context = {
+      'post':post,
+      'comment_form' : CommentForm(),      
+    }
+    return render(request, 'blog/detail.html',context)
 
 class AllBlogs(ListView):
   models = Post

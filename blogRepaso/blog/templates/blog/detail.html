@@ -13,29 +13,68 @@
 </div>
 <hr class="border border-info border-2 opacity-50 hr-color" />
 <div class="d-flex container mx-auto justify-content-center">
-
-{{post.content}}
+	{{post.content|linebreaks}}
 </div>
 <hr class="border border-info border-2 opacity-50 hr-color" />
+
 <div class="d-flex container mx-auto justify-content-center">
-  <ul class="list-group">
-  {%for tag in post.tags.all%}
-    <li class="list-group-item">{{tag}}</li>
-  {%endfor%}
-  </ul>
+<h6 class="display-6">Comments</h6>
 </div>
 
-<hr class="border border-info border-2 opacity-50 hr-color" />
+{%for comment in comments%}
 <div class="d-flex container mx-auto justify-content-center">
-	<a href="mailto:{{post.author.email_addres}}"
-		>Mail to: {{post.author.first_name}} {{post.author.last_name}}</a
-	>
-
-</div>
-<hr class="border border-info border-2 opacity-50 hr-color" />
-  <div class="d-flex container mx-auto justify-content-center">
-
-	<a href="/">Come Back</a>
+<div class="card">
+  <div class="card-header">
+    {{comment.user_name}} : {{comment.user_email}}
   </div>
+  <div class="card-body">
+    <p class="card-text">{{comment.text|linebreaks}}</p>
+  </div>
+</div>
+</div>
+{%endfor%}
+
+<hr class="border border-info border-2 opacity-50 hr-color" />
+
+
+<div class="d-flex container mx-auto justify-content-center">
+	<form action="{%url 'post-detail' post.slug%}" method="POST">
+		{% csrf_token %}
+		{%for field in comment_form%}
+		<div class="d-flex container mx-auto justify-content-center">
+			<div class="input-group mb-3">
+				<span class="input-group-text" id="basic-addon3">
+					{{field.label_tag}}
+				</span>
+			{{field}}
+			</div>
+		</div>
+		{%endfor%}
+		<div class="d-flex container mx-auto justify-content-center">
+		<button type='submit'>Save Comment</button>
+		</div>
+</div>
+	</form>
+</div>
+
+	<hr class="border border-info border-2 opacity-50 hr-color" />
+<div class="d-flex container mx-auto justify-content-center">
+	<ul class="list-group">
+		{%for tag in post.tags.all%}
+	<li class="list-group-item">{{tag}}</li>
+			{%endfor%}
+	</ul>
+</div>
+
+	<hr class="border border-info border-2 opacity-50 hr-color" />
+	<div class="d-flex container mx-auto justify-content-center">
+		<a href="mailto:{{post.author.email_addres}}"
+			>Mail to: {{post.author.first_name}} {{post.author.last_name}}</a
+		>
+	</div>
+	<hr class="border border-info border-2 opacity-50 hr-color" />
+	<div class="d-flex container mx-auto justify-content-center">
+		<a href="/">Come Back</a>
+	</div>
 </div>
 {%endblock%}
