@@ -51,11 +51,26 @@
 		</div>
 		{%endfor%}
 		<div class="d-flex container mx-auto justify-content-center">
-		<button type='submit'>Save Comment</button>
+		<button type='submit' class="btn btn-primary">Save comment</button>
 		</div>
 </div>
 	</form>
-</div>
+	<br>
+<div id="read-later" class="d-flex container mx-auto justify-content-center">
+	<form action="{% url 'read-later'%}" method='POST' id="readLaterForm">
+		{%csrf_token%}
+		<input type="hidden" value={{post.id}} name='post_id'>
+		<div class="d-flex container mx-auto justify-content-center">
+			<button type='submit' class="btn btn-info">
+				{%if saved_for_later%}
+				Remove from "Read Later" list
+				{%else%}
+				Read Later
+				{%endif%}
+			</button>
+		</div>
+	</form>
+	</div>
 
 	<hr class="border border-info border-2 opacity-50 hr-color" />
 <div class="d-flex container mx-auto justify-content-center">

@@ -22,8 +22,9 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
+    path('read-later/',views.ReadLaterView.as_view(),name='read-later'),
     path('', views.MainBlogPage.as_view()),
     path('all/',views.AllBlogs.as_view(), name="all"),
-    path('<slug:slug>', views.DetailBlog.as_view(), name='post-detail'),
     path('admin/', admin.site.urls),
+    path('post/<slug:slug>', views.DetailBlog.as_view(), name='post-detail'),
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
