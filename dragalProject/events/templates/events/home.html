@@ -1,11 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
-	</head>
-	<body>
-		tests
-	</body>
-</html>
+{% extends "events/base.html" %} {% block title %}Home Page{% endblock title %} 
+{% block content %}
+<h1>Event</h1>
+
+<ul>
+	{% for event in events %}
+	<li>{{event.title}}</li>
+	{% for game in event.game %}
+	
+	<li>{{game.title}}</li>
+	{% endfor %}
+	{% endfor %}
+</ul>
+{% endblock content %}

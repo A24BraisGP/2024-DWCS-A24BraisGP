@@ -11,6 +11,9 @@ class Game(models.Model):
     cover_art = models.ImageField(upload_to='covers',null=True)
     recommended_age= models.IntegerField(validators=[MinValueValidator(3),MaxValueValidator(18)])
     
+    def __str__(self):
+        return super().__str__()
+    
     
 class Event(models.Model):
     title = models.CharField(max_length=150)
