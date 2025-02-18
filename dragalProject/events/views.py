@@ -3,7 +3,7 @@ from django.views.generic.edit import CreateView
 from django.views.generic.base import TemplateView
 from .models import Event,Game
 from django.views.generic import ListView
-
+from .forms import EventForm
 
 # Create your views here
 class HomeView(TemplateView):
@@ -18,5 +18,7 @@ class HomeView(TemplateView):
 class AllEventView(ListView):
    pass
 class EventView(CreateView):
-   pass
-
+   model = Event
+   form_class = EventForm
+   template_name = 'events/create_event.html'
+   success_url = '/'
