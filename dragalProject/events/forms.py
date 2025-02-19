@@ -15,3 +15,9 @@ class EventForm(forms.ModelForm):
                  'participants':'Participants of the event',
                  'games':'Games of the event'}
         error_messages = {}
+        widgets = {'date': forms.DateInput(
+        format=('%Y-%m-%d'),
+        attrs={'placeholder': 'Select a date',
+               'type': 'date'
+              }),
+}

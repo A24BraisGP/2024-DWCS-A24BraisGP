@@ -12,7 +12,7 @@ class Game(models.Model):
     recommended_age= models.IntegerField(validators=[MinValueValidator(3),MaxValueValidator(18)])
     
     def __str__(self):
-        return super().__str__()
+        return self.title
     
     
 class Event(models.Model):
@@ -20,7 +20,7 @@ class Event(models.Model):
     city = models.CharField(max_length=50,null=True)
     date = models.DateField(auto_now_add=False)
     logo = models.ImageField(upload_to='logos',null=True)
-    participants = models.JSONField(default=list, blank=True, null=True)
+    # participants = models.JSONField(default=list, blank=True, null=True)
     slug = models.SlugField(default='',blank=True,null=False,db_index=True)
     description = models.TextField(max_length=400,null=True)
     games = models.ManyToManyField(Game)

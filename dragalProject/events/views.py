@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from django.views.generic.edit import CreateView
+from django.views.generic import View
 from django.views.generic.base import TemplateView
 from .models import Event,Game
 from django.views.generic import ListView
 from .forms import EventForm
+from django.urls import reverse_lazy
 
 # Create your views here
 class HomeView(TemplateView):
@@ -17,8 +18,13 @@ class HomeView(TemplateView):
 
 class AllEventView(ListView):
    pass
-class EventView(CreateView):
-   model = Event
-   form_class = EventForm
-   template_name = 'events/create_event.html'
-   success_url = '/'
+class CreateEventView(View):
+   def post(self,request):
+      model = Event
+      form_class = EventForm
+      template_name = 'events/create_event.html'
+      success_url = reverse_lazy('create-event')
+      
+      
+   def get(self,request):
+      pass
