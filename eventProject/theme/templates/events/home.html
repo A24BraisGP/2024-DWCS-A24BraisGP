@@ -1,0 +1,50 @@
+{%extends 'events/base.html'%} {%block content%} 
+
+	<main class="container mx-auto px-6 py-16 text-center">
+		<h2 class="text-4xl font-bold mb-4">Welcome to My Website</h2>
+		<p class="text-lg text-gray-600 mb-8">
+			We provide amazing services to boost your business.
+		</p>
+		<a
+			href="create-event"
+			class="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600"
+			>Add Event</a
+		>	
+	</main>
+
+	<section class="bg-white py-12">
+		<div
+			class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6"
+		>
+			{% for event in events %}
+			<div class="p-6 border rounded-lg shadow">
+				{% if event.logo %}
+
+				<img
+					src="{{event.logo.url}}"
+					alt="event picture"
+					class="w-10 h-10 object-scale-down"
+				/>
+				{% endif %}
+
+				<h3 class="text-2xl font-bold mb-2">{{event.title}}</h3>
+				<p class="text-gray-600">{{event.date|date:'F jS Y'}}</p>
+				<hr class="border-4 border-blue-50 my-4" />
+				<a
+					href="{{event.get_absolute_url}}"
+					class="bg-blue-500 text-white px-4 py-1 rounded-lg hover:bg-blue-700"
+					>Go to details</a
+				>
+			</div>
+
+			{% endfor %}
+		</div>
+	</section>
+
+	<footer class="bg-gray-800 text-white py-8">
+		<div class="container mx-auto text-center">
+			<p></p>
+		</div>
+	</footer>
+</div>
+{% endblock %}

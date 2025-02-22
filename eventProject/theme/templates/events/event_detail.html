@@ -1,0 +1,20 @@
+{%extends 'events/base.html'%} {%block content%}
+
+<div>
+	<h2>{{event.title}}</h2>
+	<p>Date: {{ event.date }}</p>
+	<p>City: {{ event.city }}</p>
+	<p>{{event.artist}}</p>
+	<p>{{event.ticket_price}} €</p>
+
+	<form action="{%url 'cart'%}" method="post">
+		{%csrf_token%}
+		<input type="hidden" name="event_id" value="{{event.id}}" />
+		<input type="number" name="numberOfTickets" min="1" placeholder="1" />
+		<button type="submit">Añadir al carrito</button>
+	</form>
+	<a href="/">Home</a>
+	<a href="{{event.get_absolute_url}}/delete">Delete event</a>
+	<a href="{{event.get_absolute_url}}/update">Update event</a>
+</div>
+{% endblock %}
