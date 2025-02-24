@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Django Tailwind</title>
+		<title>{%block title%}Django Tailwind{%endblock%}</title>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -27,23 +27,46 @@
 		<script src="{% static 'fontawesomefree/js/brands.js' %}"></script>
 	</head>
 
-	<body class="bg-gray-50 font-serif leading-normal tracking-normal">
+	<body class="bg-gray-100 font-serif leading-normal tracking-normal">
 
 <div class="bg-gray-100 text-gray-900">
 	<header class="bg-white shadow">
 		<div
 			class="container mx-auto px-6 py-4 flex justify-between items-center"
 		>
-			<h1 class="text-2xl font-bold">My Website</h1>
+			<a href="/"><h1 class="text-2xl font-bold">TicketTicks</h1>
+			</a>
 			<nav>
 				<ul class="flex space-x-4">
 					<li><a href="/" class="hover:text-blue-500">Home</a></li>
-					<li><a href="list-events" class="hover:text-blue-500">All Events</a></li>
-					<li><a href="cart" class="hover:text-blue-500">Cart</a></li>
+					<li><a href="/list-events" class="hover:text-blue-500">All Events</a></li>
+					<li><a href="/cart" class="hover:text-blue-500">Cart</a></li>
 				</ul>
 			</nav>
 		</div>
 	</header>
 		{% block content%} {% endblock %}
+		<footer class="bg-gray-800 text-white py-8 my-10">
+			<div class="grid grid-cols-2 gap-10" >
+			<div class='mx-10 my-auto' >
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis magnam, deserunt aliquid porro impedit atque alias doloremque possimus quasi sit illum vero, tempora in pariatur, error quos vitae expedita ex!
+			</div>
+			<div class='container mx-auto grid-cols-4 place-items-center'>
+				<button>
+
+					<i class="fa-brands fa-instagram p-3 row-span-1 cursor-pointer"></i>
+				</button>
+				<button>
+					<i class="fa-brands fa-twitter p-3 row-span-1	cursor-pointer"></i>
+				</button>
+				<button>
+					<i class="fa-brands fa-youtube p-3 row-span-1	cursor-pointer"></i>
+				</button>
+				<button>
+					<i class="fa-brands fa-tiktok p-3 row-span-1 cursor-pointer"></i>
+				</button>
+			</div>
+		</div>
+	</footer>
 	</body>
 </html>

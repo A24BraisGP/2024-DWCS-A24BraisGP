@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.views import View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from .models import Event
+from .models import Event, Artist
 from .forms import EventForm
 from django.views.generic import DetailView, ListView
 from django.urls import reverse_lazy
@@ -15,8 +15,23 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['events'] = Event.objects.all().order_by('date')[:3]
+        
+        if self.request.GET.get('filter'):
+            event_filter = self.request.GET.get('filter')
+            events = self.filter_events(event_filter)
+            context["events"] = events
         return context
     
+    def filter_events(self, event_filter):
+        events = Event.objects.all()
+        if event_filter == "price":
+            events.order_by("ticket_price")
+        elif event_filter == "date":
+            events.order_by("date")
+        elif event_filter == "city":
+            events.order_by("city")
+            
+        return events[:3]
 class CreateEventView(CreateView):
     model = Event
     form_class = EventForm
@@ -37,6 +52,18 @@ class EventDetailView(DetailView):
     template_name = 'events/event_detail.html'
     model = Event
     
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        event = context['event']
+        cart = self.request.session.get('cart')
+        is_in_cart = False
+        if cart is None:
+            is_in_cart = False
+        else:
+            is_in_cart = event.id in cart
+        context['in_cart'] = is_in_cart
+        return context
+    
 class EventDeleteView(DeleteView):
     model = Event
     template_name= 'events/delete_event.html'
@@ -50,27 +77,49 @@ class EventUpdateView(UpdateView):
 
 class CartView(View):
     def post(self, request):
-        event_id = request.POST['event_id']
-        number_tickets = request.POST['numberOfTickets']
-        request.session['cart'] = {
-             'event_id':event_id,
-             'number_tickets':number_tickets   
-            } 
-        event_slug = Event.objects.get(pk=event_id).slug
+        cart = request.session.get('cart')
+        if cart is None or len(cart) == 0:
+            cart = []
+        event_id = int(request.POST['event_id'])
+        if event_id not in cart: 
+            cart.append(event_id)
+        else:
+            cart.remove(event_id)          
+        request.session['cart'] = cart            
+        events = Event.objects.filter(id__in=cart)
+        total_price = 0
+        for event in events:
+            total_price += event.ticket_price
+        request.session['total_price'] = total_price
+        print(request.session['total_price'])
         return HttpResponseRedirect("/")
     
     def get(self,request):
-        cart = request.session['cart']
+        cart = request.session.get('cart')
+        total_price = request.session.get('total_price')
         context = {}
-        if cart is None:
+        if cart is None or len(cart) == 0:
             context['events'] = []
-            context['tickets'] = []
             context['has_cart'] = False
+            context['total_price'] = 0 
         else:
-            events = Event.objects.filter(id__in=cart['event_id'])
+            events = Event.objects.filter(id__in=cart)
             context['events'] = events
-            context['tickets'] = []
             context['has_cart'] = True
+            context['total_price'] = total_price
             
         return render(request, 'events/cart.html',context)
-  
+
+class ArtistDetailView(DetailView):
+    template_name = 'events/artist_detail.html'
+    model = Artist
+    context_object_name = 'artist'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        artist = context['artist']
+        song_list = artist.songs
+        songs = song_list.split(', ')
+        context['songs'] = songs
+        return context
+    

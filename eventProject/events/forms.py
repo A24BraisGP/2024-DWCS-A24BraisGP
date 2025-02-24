@@ -9,7 +9,7 @@ class EventForm(forms.ModelForm):
         labels = {
             'title':'Title of the event',
             'city':'City hosting the event',
-            'date':'date of the event',
+            'date':'Date of the event',
             'ticket_price':'Price of the ticket',
             'artist':'Artist performing in the event',
             'description':'Description of the event',

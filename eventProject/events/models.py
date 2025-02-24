@@ -11,7 +11,10 @@ class Artist(models.Model):
 
     def __str__(self):
         return self.name 
-
+    
+    def get_absolute_url(self):
+         return reverse("artist-detail", args=[self.pk])
+     
 class Event(models.Model):
     title = models.CharField(max_length=150)
     city = models.CharField(max_length=150)

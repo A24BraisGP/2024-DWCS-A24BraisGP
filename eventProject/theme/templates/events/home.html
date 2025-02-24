@@ -1,9 +1,10 @@
-{%extends 'events/base.html'%} {%block content%} 
+{%extends 'events/base.html'%}
+{% block title %}Home{% endblock%} {%block content%} 
 
 	<main class="container mx-auto px-6 py-16 text-center">
-		<h2 class="text-4xl font-bold mb-4">Welcome to My Website</h2>
+		<h2 class="text-4xl font-bold mb-4">TicketTicks</h2>
 		<p class="text-lg text-gray-600 mb-8">
-			We provide amazing services to boost your business.
+			The best way to get your tickets
 		</p>
 		<a
 			href="create-event"
@@ -13,6 +14,15 @@
 	</main>
 
 	<section class="bg-white py-12">
+	<div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6"><form  action="#" method="get">
+		<select name="filter" id="filter">
+			<option value="price">Price</option>
+			<option value="date">Date</option>
+			<option value="city">City</option>
+		</select>
+		<button type="submit">Order by</button>
+	</form></div>
+
 		<div
 			class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6"
 		>
@@ -29,6 +39,7 @@
 
 				<h3 class="text-2xl font-bold mb-2">{{event.title}}</h3>
 				<p class="text-gray-600">{{event.date|date:'F jS Y'}}</p>
+				<p class="text-grey-600">{{event.city|upper}}</p>
 				<hr class="border-4 border-blue-50 my-4" />
 				<a
 					href="{{event.get_absolute_url}}"
@@ -41,10 +52,6 @@
 		</div>
 	</section>
 
-	<footer class="bg-gray-800 text-white py-8">
-		<div class="container mx-auto text-center">
-			<p></p>
-		</div>
-	</footer>
+	
 </div>
 {% endblock %}

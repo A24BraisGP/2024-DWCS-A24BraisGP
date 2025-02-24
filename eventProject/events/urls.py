@@ -27,4 +27,5 @@ urlpatterns = [
     path('detail/<slug:slug>',views.EventDetailView.as_view(),name='event-detail'),
     path('detail/<slug:slug>/update/',views.EventUpdateView.as_view(),name='update-event'),
     path('detail/<slug:slug>/delete/',views.EventDeleteView.as_view(),name='delete-event'),
+    path('<int:pk>',views.ArtistDetailView.as_view(),name='artist-detail'),
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

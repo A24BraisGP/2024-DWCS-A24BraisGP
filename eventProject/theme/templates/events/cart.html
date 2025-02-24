@@ -1,16 +1,24 @@
 {%extends 'events/base.html'%} {%block content%} 
 
 	<main class="container mx-auto px-6 py-16 text-center">
-		<h2 class="text-4xl font-bold mb-4">Welcome to My Website</h2>
-		<p class="text-lg text-gray-600 mb-8">
-			We provide amazing services to boost your business.
-		</p>
-		<a
-			href="create-event"
-			class="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600"
-			>Add Event</a
-		>
 	</main>
-	<section>aaaaaa</section>
+	<section class="bg-gray-100 font-serif leading-normal tracking-normal">
+		<div class='container mx-auto justify-center text-center'>
+
+			{% if has_cart %}
+			<p>Total Price: {{total_price}} €</p>
+			{% for event in events  %}
+			<hr class="border-4 border-blue-950 my-4" />
+			
+			<h4 class="text-2xl text-blue-300 hover:text-blue-500"><a href="{{event.get_absolute_url}}">{{event.title}}</a></h4>
+			<p class="text-xl">{{event.city}}</p>
+			<p>{{event.ticket_price}} €</p>
+			
+			{% endfor %}
+		{% else %}
+		<h3 class="text-2xl text-bold">NO CART</h3>
+		{% endif %}
+	</div>
+	</section>
 </div>
 {% endblock %}

@@ -1,0 +1,17 @@
+{%extends 'events/base.html'%} {%block content%}
+
+<div>
+	{% if artist.picture %}
+
+	<img
+		src="{{artist.picture.url}}"
+		alt="{{artist.name}} picture"
+		class="w-10 h-10 object-scale-down"
+	/>
+	{% endif %}
+	<p>{{artist.name}}</p>
+	{% for song in songs %}
+	<p>{{song}}</p>
+	{% endfor %} {{artist.genre}}
+</div>
+{% endblock %}

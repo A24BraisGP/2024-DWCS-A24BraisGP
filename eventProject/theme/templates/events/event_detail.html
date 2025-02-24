@@ -4,14 +4,22 @@
 	<h2>{{event.title}}</h2>
 	<p>Date: {{ event.date }}</p>
 	<p>City: {{ event.city }}</p>
-	<p>{{event.artist}}</p>
+	<p class="text-blue-300 hover:text-blue-500">
+		<a href="{{event.artist.get_absolute_url}}"> {{event.artist}}</a>
+	</p>
+
 	<p>{{event.ticket_price}} €</p>
 
 	<form action="{%url 'cart'%}" method="post">
 		{%csrf_token%}
 		<input type="hidden" name="event_id" value="{{event.id}}" />
-		<input type="number" name="numberOfTickets" min="1" placeholder="1" />
-		<button type="submit">Añadir al carrito</button>
+		<button
+			type="submit"
+			class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+		>
+			{% if in_cart %} Quitar de carrito {% else %} Añadir al carrito
+			{%endif %}
+		</button>
 	</form>
 	<a href="/">Home</a>
 	<a href="{{event.get_absolute_url}}/delete">Delete event</a>
