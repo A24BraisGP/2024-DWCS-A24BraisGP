@@ -1,5 +1,5 @@
 from django import forms 
-from .models import Event
+from .models import Event, Artist
 
 class EventForm(forms.ModelForm):
     class Meta:
@@ -17,4 +17,16 @@ class EventForm(forms.ModelForm):
         }
         widgets = {
             'date': forms.DateInput(format='%d/%m/%Y', attrs={'type': 'date'}),
+        }
+
+class ArtistForm(forms.ModelForm):
+    
+    class Meta: 
+        model = Artist
+        fields = '__all__'
+        labels ={
+            'name': 'Name of the artist',
+            'genre': 'Genre of music of the artist',
+            'picture':'Flatering picture of the artist',
+            'songs':'List of songs the artist is performing (SEPARATED BY COMMA)'
         }

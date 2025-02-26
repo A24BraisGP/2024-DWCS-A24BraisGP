@@ -11,42 +11,61 @@
 			class="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600"
 			>Add Event</a
 		>	
+		<a
+			href="create-artist"
+			class="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600"
+			>Add Artist</a
+		>
 	</main>
 
 	<section class="bg-white py-12">
-	<div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6"><form  action="#" method="get">
-		<select name="filter" id="filter">
-			<option value="price">Price</option>
-			<option value="date">Date</option>
-			<option value="city">City</option>
-		</select>
-		<button type="submit">Order by</button>
-	</form></div>
+		
+		<div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+			<form action="" method="get">
+				<label for="city">Search by city</label>
+				<input type="text" name="city" id="city" placeholder="City..." value="{{request.GET.city}}">
+				<button type="submit">
+					<i class="fa-solid fa-magnifying-glass"></i>
+				</button>
+			</form>
+		</div>
 
 		<div
 			class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6"
 		>
 			{% for event in events %}
-			<div class="p-6 border rounded-lg shadow">
-				{% if event.logo %}
-
+			<div class="p-6 border rounded-lg shadow-lg bg-white">
+			{% if event.logo %}
+			<div class="flex justify-center mb-4">
 				<img
-					src="{{event.logo.url}}"
-					alt="event picture"
-					class="w-10 h-10 object-scale-down"
+					src="{{ event.logo.url }}"
+					alt="event logo"
+					class="w-full-[calc(100%-5%)] h-full object-cover rounded-md"
 				/>
-				{% endif %}
-
-				<h3 class="text-2xl font-bold mb-2">{{event.title}}</h3>
-				<p class="text-gray-600">{{event.date|date:'F jS Y'}}</p>
-				<p class="text-grey-600">{{event.city|upper}}</p>
-				<hr class="border-4 border-blue-50 my-4" />
-				<a
-					href="{{event.get_absolute_url}}"
-					class="bg-blue-500 text-white px-4 py-1 rounded-lg hover:bg-blue-700"
-					>Go to details</a
-				>
 			</div>
+			{% endif %}
+
+			<h3 class="text-2xl font-bold mb-2 text-center">
+				{{ event.title }}
+			</h3>
+
+			<div class="text-center mb-2">
+				<p class="text-gray-600">{{ event.date |date:'F jS Y' }}</p>
+				<p class="text-gray-600 uppercase">{{ event.city }}</p>
+			</div>
+
+			<hr class="border-t-2 border-blue-200 my-4" />
+
+			<div class="flex justify-center">
+				<a
+					href="{{ event.get_absolute_url }}"
+					class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300"
+				>
+					Go to details  
+					<i class="fa-solid fa-arrow-right ml-2"></i>
+				</a>
+			</div>
+		</div>
 
 			{% endfor %}
 		</div>
@@ -54,4 +73,6 @@
 
 	
 </div>
+
+<div style="display:none" class="bg-red-50"></div>
 {% endblock %}

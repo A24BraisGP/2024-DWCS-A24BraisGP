@@ -3,7 +3,7 @@ from django.views.generic.base import TemplateView
 from django.views import View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from .models import Event, Artist
-from .forms import EventForm
+from .forms import EventForm, ArtistForm
 from django.views.generic import DetailView, ListView
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
@@ -15,23 +15,16 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['events'] = Event.objects.all().order_by('date')[:3]
-        
-        if self.request.GET.get('filter'):
-            event_filter = self.request.GET.get('filter')
-            events = self.filter_events(event_filter)
-            context["events"] = events
+        city_search = self.request.GET.get('city')
+        city_search = city_search.strip() if city_search else None
+        if city_search:
+            context['events'] = self.search_by_city(city_search)
         return context
     
-    def filter_events(self, event_filter):
-        events = Event.objects.all()
-        if event_filter == "price":
-            events.order_by("ticket_price")
-        elif event_filter == "date":
-            events.order_by("date")
-        elif event_filter == "city":
-            events.order_by("city")
-            
-        return events[:3]
+    def search_by_city(self, city_search):
+        return Event.objects.filter(city__icontains = city_search)
+    
+   
 class CreateEventView(CreateView):
     model = Event
     form_class = EventForm
@@ -41,12 +34,34 @@ class CreateEventView(CreateView):
 class EventListView(ListView):
     template_name = 'events/list_events.html'
     model = Event
-    context_object_name= 'events'
+    context_object_name = 'events'
     
-    def get_queryset(self):
-        base_query = Event.objects.all()
-        data = base_query.order_by('date')
-        return data
+    def get_queryset(self,**kwargs):      
+        events = Event.objects.all().order_by('date')
+        event_filter = self.request.GET.get('filter')
+        if event_filter:
+            events = self.filter_events(event_filter)
+        city_search = self.request.GET.get('city')
+        city_search = city_search.strip() if city_search else None
+        if city_search:
+            events = self.search_by_city(city_search)
+        return events
+    
+      
+    def search_by_city(self, city_search):
+        return Event.objects.filter(city__icontains = city_search)
+    
+   
+    
+    def filter_events(self, event_filter):
+        if event_filter == "price":
+            return Event.objects.all().order_by("ticket_price")
+        elif event_filter == "date":
+            return Event.objects.all().order_by("date")     
+        elif event_filter == "city":
+            return Event.objects.all().order_by("city")
+            
+        return Event.objects.all()
     
 class EventDetailView(DetailView):
     template_name = 'events/event_detail.html'
@@ -121,5 +136,12 @@ class ArtistDetailView(DetailView):
         song_list = artist.songs
         songs = song_list.split(', ')
         context['songs'] = songs
+        context['events'] = artist.events.all()
         return context
-    
+
+class CreateArtistView(CreateView):
+    model = Artist
+    form_class = ArtistForm
+    template_name = 'events/create_artist.html'
+    success_url = '/'
+   

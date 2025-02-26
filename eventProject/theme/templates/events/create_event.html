@@ -1,7 +1,13 @@
 {% extends "events/base.html" %} {% block title %}Create Event{% endblock%}
 {%block content%}
 <div class="flex items-center justify-center min-h-screen">
-	<form action="" method="POST" class="rounded-lg shadow-lg w-full sm:w-96">
+	<form
+		action=""
+		method="POST"
+		class="rounded-lg shadow-lg w-full sm:w-96"
+		enctype="multipart/form-data"
+	>
+		{% csrf_token %}
 		<h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">
 			Crear Evento
 		</h2>
