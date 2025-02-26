@@ -1,45 +1,60 @@
 {%extends 'events/base.html'%} {%block content%}
-
-<div>
-	{% if artist.picture %}
-
-	<img
-		src="{{artist.picture.url}}"
-		alt="{{artist.name}} picture"
-		class="w-10 h-10 object-scale-down"
-	/>
-	{% endif %}
-	<p>{{artist.name}}</p>
-	{% for song in songs %}
-	<p>{{song}}</p>
-	{% endfor %} {{artist.genre}}
-</div>
-<section class="bg-white py-12">
-	<h3 class="text-2xl">EVENTS OF THE ARTIST</h3>
-	<div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-		{% for event in events %}
-		<div class="p-6 border rounded-lg shadow">
-			{% if event.logo %}
-
-			<img
-				src="{{event.logo.url}}"
-				alt="event picture"
-				class="w-10 h-10 object-scale-down"
-			/>
-			{% endif %}
-
-			<h3 class="text-2xl font-bold mb-2">{{event.title}}</h3>
-			<p class="text-gray-600">{{event.date|date:'F jS Y'}}</p>
-			<p class="text-grey-600">{{event.city|upper}}</p>
-			<hr class="border-4 border-blue-50 my-4" />
-			<a
-				href="{{event.get_absolute_url}}"
-				class="bg-blue-500 text-white px-4 py-1 rounded-lg hover:bg-blue-700"
-				>Go to details</a
-			>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+	<!-- Artist Information Section -->
+	<div class="flex items-center space-x-6">
+		{% if artist.picture %}
+		<img
+			src="{{ artist.picture.url }}"
+			alt="{{ artist.name }} picture"
+			class="w-20 h-20 rounded-full"
+		/>
+		{% endif %}
+		<div>
+			<h2 class="text-3xl font-semibold">{{ artist.name }}</h2>
+			<p class="text-lg text-gray-500 mt-2">{{ artist.genre }}</p>
+			<div class="mt-4">
+				<h4 class="font-semibold">Songs:</h4>
+				<ul class="list-disc pl-5 space-y-2">
+					{% for song in songs %}
+					<li class="text-gray-700">{{ song }}</li>
+					{% endfor %}
+				</ul>
+			</div>
 		</div>
-
-		{% endfor %}
 	</div>
-</section>
+	<!-- Artist Events Section -->
+	<section class="bg-white py-12 mt-8">
+		<h3 class="text-2xl font-semibold text-center">Events of the Artist</h3>
+		<div
+			class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6"
+		>
+			{% for event in events %}
+			<div
+				class="p-6 border border-gray-200 rounded-lg shadow-md transition transform hover:scale-105 hover:shadow-lg"
+			>
+				{% if event.logo %}
+				<img
+					src="{{ event.logo.url }}"
+					alt="event logo"
+					class="w-full h-40 object-cover rounded-t-lg mb-4"
+				/>
+				{% endif %}
+				<h3 class="text-xl font-semibold text-gray-900">
+					{{ event.title }}
+				</h3>
+				<p class="text-gray-600 text-sm">
+					{{ event.date|date:'F jS Y' }}
+				</p>
+				<p class="text-gray-600 text-sm">{{ event.city|upper }}</p>
+				<hr class="border-4 border-blue-50 my-4" />
+				<a
+					href="{{ event.get_absolute_url }}"
+					class="block text-center bg-blue-500 text-white py-2 rounded-lg mt-4 hover:bg-blue-700 transition duration-300"
+					>Go to Details</a
+				>
+			</div>
+			{% endfor %}
+		</div>
+	</section>
+</div>
 {% endblock %}
