@@ -6,19 +6,62 @@
 		<div class='container mx-auto justify-center text-center'>
 
 			{% if has_cart %}
-			<p>Total Price: {{total_price}} €</p>
-			{% for event in events  %}
-			<hr class="border-4 border-blue-950 my-4" />
 			
-			<h4 class="text-2xl text-blue-300 hover:text-blue-500"><a href="{{event.get_absolute_url}}">{{event.title}}</a></h4>
-			<p class="text-xl">{{event.city}}</p>
-			<p>{{event.ticket_price}} €</p>
 			
-			{% endfor %}
+  <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+    <div class="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
+      <div class="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
+        <div class="space-y-6">
+          <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
+            
+      <div class="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
+        <div class="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
+          <p class="text-xl font-semibold text-gray-900 dark:text-white">Your Cart</p>
+
+          <div class="space-y-4">
+            <div class="space-y-2">
+				{% for event in events  %}
+				<dl class="flex items-center justify-between gap-4">
+				  <dt class="text-base font-normal text-gray-500 dark:text-gray-400">
+
+					<a class="group text-dark-500 transition-all duration-300 ease-in-out" href="{{event.get_absolute_url}}"><span class="bg-left-bottom bg-gradient-to-r from-blue-500 to-blue-500 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
+					{{event.title}} -- {{event.city}}
+
+					</span></a>
+
+				
+				</dt>
+				  <dd class="text-base font-medium text-gray-900 dark:text-white">{{event.ticket_price}} €</dd>
+				</dl>
+				
+				{% endfor %}
+
+            <dl class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
+              <dt class="text-base font-bold text-gray-900 dark:text-white">Total</dt>
+              <dd class="text-base font-bold text-gray-900 dark:text-white">{{total_price}} €</dd>
+            </dl>
+          </div>        
+        </div>
+
+    
+      </div>
+    </div>
+  </div>
 		{% else %}
 		<h3 class="text-2xl text-bold">NO CART</h3>
+			<br>
+		<a
+			href="/"
+			class="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600"
+			>Home</a
+		>
+
 		{% endif %}
 	</div>
 	</section>
 </div>
+
+{% comment %} new test  {% endcomment %}
+
+
 {% endblock %}

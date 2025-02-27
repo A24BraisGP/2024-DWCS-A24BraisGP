@@ -12,6 +12,8 @@ from django.http import HttpResponseRedirect
 class HomeView(TemplateView):
     template_name = 'events/home.html'
     
+    
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['events'] = Event.objects.all().order_by('date')[:3]
@@ -107,7 +109,7 @@ class CartView(View):
             total_price += event.ticket_price
         request.session['total_price'] = total_price
         print(request.session['total_price'])
-        return HttpResponseRedirect("/")
+        return HttpResponseRedirect("/cart")
     
     def get(self,request):
         cart = request.session.get('cart')
@@ -137,6 +139,7 @@ class ArtistDetailView(DetailView):
         songs = song_list.split(', ')
         context['songs'] = songs
         context['events'] = artist.events.all()
+        context['events_count'] = artist.events.count()
         return context
 
 class CreateArtistView(CreateView):

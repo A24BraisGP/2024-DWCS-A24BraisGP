@@ -39,19 +39,19 @@
 		<div class="mb-4">{{ field }}</div>
 		{% endif %} {% endfor %}
 
-		<div class="flex justify-between">
+		<div class="flex justify-around">
 			<button
 				type="submit"
 				class="p-3 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
 			>
 				Create Artist
 			</button>
-			<button
-				type="reset"
+			<a
+				href="javascript:history.back()"
 				class="p-3 rounded-lg hover:bg-red-400 focus:outline-none focus:ring-2"
 			>
 				Cancel
-			</button>
+			</a>
 		</div>
 	</form>
 </div>

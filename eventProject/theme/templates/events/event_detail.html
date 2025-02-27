@@ -1,57 +1,64 @@
-{%extends 'events/base.html'%} {%block content%}
+{% extends 'events/base.html' %} {%block title%} {{event.title}} {% endblock %}
+{% block content %}
 
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-	<!-- Event Title and Details Section -->
-	<div class="mb-6">
-		<h2 class="text-3xl font-bold text-gray-900">{{ event.title }}</h2>
-		<p class="text-lg text-gray-700 mt-2">Date: {{ event.date }}</p>
-		<p class="text-lg text-gray-700 mt-2">City: {{ event.city }}</p>
-		<p class="text-blue-300 hover:text-blue-500 mt-2">
-			<a href="{{ event.artist.get_absolute_url }}" class="underline"
-				>{{ event.artist }}</a
+<div class="flex justify-center bg-gray-100 mt-12">
+	<div
+		class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-white rounded-lg shadow-lg"
+	>
+		<div class="mb-6">
+			<h2 class="text-3xl font-bold text-gray-900">{{ event.title }}</h2>
+			<p class="text-lg text-gray-700 mt-2">Date: {{ event.date }}</p>
+			<p class="text-lg text-gray-700 mt-2">City: {{ event.city }}</p>
+			<a
+				class="group text-dark-500 transition-all duration-300 ease-in-out mt-2"
+				href="{{event.artist.get_absolute_url}}"
+				><span
+					class="bg-left-bottom bg-gradient-to-r from-blue-500 to-blue-500 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out mt-2"
+					>{{event.artist}}</span
+				></a
 			>
-		</p>
-		<p class="text-lg font-semibold mt-4">
-			Price: {{ event.ticket_price }} €
-		</p>
-	</div>
+			<hr
+				class="w-48 h-1 mx-auto my-4 bg-gray-100 border-0 rounded-sm md:my-10 dark:bg-gray-700"
+			/>
+			<p class="text-xl">{{ event.description }}</p>
+			<p class="text-lg font-semibold mt-4">
+				Price: {{ event.ticket_price }} €
+			</p>
+		</div>
 
-	<!-- Add to Cart Form -->
-	<div class="my-6">
-		<form action="{% url 'cart' %}" method="post">
-			{% csrf_token %}
-			<input type="hidden" name="event_id" value="{{ event.id }}" />
-			<button
-				type="submit"
-				class="w-full sm:w-auto bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded transition duration-300"
+		<div class="my-6">
+			<form action="{% url 'cart' %}" method="post">
+				{% csrf_token %}
+				<input type="hidden" name="event_id" value="{{ event.id }}" />
+				<button
+					type="submit"
+					class="w-full sm:w-auto bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded transition duration-300"
+				>
+					{% if in_cart %} Remove from cart
+					<i class="fa-solid fa-ticket"></i>
+					{% else %} Add to cart {% endif %}
+				</button>
+			</form>
+		</div>
+
+		<div class="flex flex-wrap space-x-4 mt-6">
+			<a
+				href="/"
+				class="w-full sm:w-auto bg-blue-500 text-white px-6 py-2 rounded-lg text-center hover:bg-blue-700 transition duration-300"
+				>Home</a
 			>
-				{% if in_cart %} Remove from cart
-				<i class="fa-solid fa-ticket"></i>
-				{% else %} Add to cart {% endif %}
-			</button>
-		</form>
-	</div>
-
-	<!-- Action Buttons Section -->
-	<div class="flex flex-wrap space-x-4 mt-6">
-		<a
-			href="/"
-			class="w-full sm:w-auto bg-blue-500 text-white px-6 py-2 rounded-lg text-center hover:bg-blue-700 transition duration-300"
-		>
-			Home
-		</a>
-		<a
-			href="{{ event.get_absolute_url }}/delete"
-			class="w-full sm:w-auto bg-red-500 text-white px-6 py-2 rounded-lg text-center hover:bg-red-700 transition duration-300"
-		>
-			Delete Event
-		</a>
-		<a
-			href="{{ event.get_absolute_url }}/update"
-			class="w-full sm:w-auto bg-yellow-500 text-white px-6 py-2 rounded-lg text-center hover:bg-yellow-700 transition duration-300"
-		>
-			Update Event
-		</a>
+			<a
+				href="{{ event.get_absolute_url }}/delete"
+				class="w-full sm:w-auto bg-red-500 text-white px-6 py-2 rounded-lg text-center hover:bg-red-700 transition duration-300"
+				>Delete Event</a
+			>
+			<a
+				href="{{ event.get_absolute_url }}/update"
+				class="w-full sm:w-auto bg-yellow-500 text-white px-6 py-2 rounded-lg text-center hover:bg-yellow-700 transition duration-300"
+				>Update Event</a
+			>
+		</div>
 	</div>
 </div>
+
 {% endblock %}

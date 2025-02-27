@@ -1,7 +1,60 @@
-{%extends 'events/base.html'%} {%block content%}
-<form action="" method="post">
-	{%csrf_token%} {% for field in form %} {{field.label_tag}} {{field}}
-	{%endfor%}
-	<button type="submit">Save</button>
-</form>
-{% endblock content %}
+{% extends "events/base.html" %} {% block title %}Create Event{% endblock%}
+{%block content%}
+<div class="flex items-center justify-center min-h-screen my-3">
+	<form
+		action=""
+		method="POST"
+		class="rounded-lg shadow-lg w-full sm:w-96"
+		enctype="multipart/form-data"
+	>
+		{% csrf_token %}
+		<h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">
+			Update {{event.title}}
+		</h2>
+
+		{% for field in form %}
+		<div class="mb-4">
+			{% if field.name == 'logo' %}
+			<i class="fa-solid fa-upload"></i>
+			<label
+				for="{{ field.id_for_label }}"
+				class="inline-block bg-blue-300 px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2 ml-4"
+			>
+				{{ field.label_tag}}
+			</label>
+			<!-- Hidden actual file input -->
+			<input
+				type="file"
+				id="{{ field.id_for_label }}"
+				name="{{ field.name }}"
+				class="hidden"
+			/>
+			{% else %}
+			<label
+				for="{{ field.id_for_label }}"
+				class="block text-sm font-medium text-gray-700 ml-4 underline"
+				>{{ field.label_tag }}</label
+			>
+		</div>
+		<div class="mb-4">{{ field }}</div>
+		{% endif %} {% endfor %}
+
+		<div class="flex justify-around">
+			<button
+				type="submit"
+				class="p-3 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+			>
+				Update Event
+			</button>
+			<a
+				href="javascript:history.back()"
+				class="p-3 rounded-lg hover:bg-red-400 focus:outline-none focus:ring-2"
+			>
+				Cancel
+			</a>
+		</div>
+	</form>
+</div>
+</div>
+{%endblock%}
+

@@ -3,7 +3,7 @@ from .models import Event, Artist
 # Register your models here.
 class EventAdmin(admin.ModelAdmin):
     list_display  = ('title','date','city')
-    list_filter = ('title','date','city')
+    list_filter = ('title','date','city','ticket_price')
     prepopulated_fields = {'slug': ('title',)}
 
 
