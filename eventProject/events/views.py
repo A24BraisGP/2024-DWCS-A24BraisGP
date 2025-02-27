@@ -7,7 +7,7 @@ from .forms import EventForm, ArtistForm
 from django.views.generic import DetailView, ListView
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
-
+from django.db.models import Sum
 # Create your views here.
 class HomeView(TemplateView):
     template_name = 'events/home.html'
@@ -104,10 +104,8 @@ class CartView(View):
             cart.remove(event_id)          
         request.session['cart'] = cart            
         events = Event.objects.filter(id__in=cart)
-        total_price = 0
-        for event in events:
-            total_price += event.ticket_price
-        request.session['total_price'] = total_price
+        total_price = events.aggregate(Sum('ticket_price'))['ticket_price__sum']
+        request.session['total_price'] = total_price 
         print(request.session['total_price'])
         return HttpResponseRedirect("/cart")
     
@@ -138,7 +136,7 @@ class ArtistDetailView(DetailView):
         song_list = artist.songs
         songs = song_list.split(', ')
         context['songs'] = songs
-        context['events'] = artist.events.all()
+        context['events'] = artist.events.all().order_by('date')
         context['events_count'] = artist.events.count()
         return context
 
