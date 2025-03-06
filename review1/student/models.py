@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.urls import reverse
 from django.utils.text import slugify
-from datetime import date
+
 # Create your models here.
 class Degree(models.Model):
     name = models.CharField(max_length=150)
@@ -15,8 +15,8 @@ class Degree(models.Model):
 class Student(models.Model):
     name_surname = models.CharField(max_length=150)
     picture = models.ImageField(upload_to='alumni')
-    age = models.DateField(validators=[MinValueValidator(date(1970,1,1)),MaxValueValidator(date(2010,1,1))])
     slug = models.SlugField(unique=True,blank=True)
+    year_of_birth = models.IntegerField(validators=[MinValueValidator(1970),MaxValueValidator(2010)],null=True, blank=True)
     finished_degree = models.BooleanField(default=False)
     degree = models.ForeignKey(Degree, on_delete=models.CASCADE, null=True)
     
@@ -27,3 +27,18 @@ class Student(models.Model):
         if not self.slug:
             self.slug = slugify(self.name_surname)
         super().save(*args,**kwargs)
+        
+    def __str__(self):
+        return self.name_surname
+    
+# from student.models import Degree,Student 
+# degree = Degree.objects.get(id=1)
+# student_older_20 = students.filter(year_of_birth__lte=2005)
+# avg_year = students.aggregate(Avg('year_of_birth'))
+# from django.db.models import Avg
+# {'year_of_birth__avg': 2002.0}
+# avg_age = 2025 - avg_year['year_of_birth__avg']
+
+# students_degree = Student.objects.all().filter(finished_degree = True).count()
+
+# students_finished_degree = Student.objects.filter(degree=degree, finished_degree=True)
