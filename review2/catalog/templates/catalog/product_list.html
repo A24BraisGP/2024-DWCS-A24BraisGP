@@ -7,9 +7,7 @@
 		<title>Document</title>
 	</head>
 	<body>
-		{% for product in products %}
-		<a href="{{product.get_absolute_url}}"><p>{{product.name}}</p></a>
-		{% endfor %} <img src="{% static "1391491717.png" %}" alt="perrito
-		bonito">
+		<a href="/">To home</a>
+		{%include 'catalog/includes/loop.txt'%}
 	</body>
 </html>

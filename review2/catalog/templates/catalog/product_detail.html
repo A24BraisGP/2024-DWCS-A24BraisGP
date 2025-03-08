@@ -6,16 +6,30 @@
 		<title>Document</title>
 	</head>
 	<body>
+		<h2>Name</h2>
 		<p>{{product.name}}</p>
+		<h2>Description</h2>
 		<p>{{product.description}}</p>
-		<p>{{product.price}}</p>
+		<h2>Price</h2>
+		<p>{{product.price}}€</p>
+		<h2>Category</h2>
 		<p>{{product.category.name}}</p>
-		<img src="{{product.picture.url}}" alt="{{product.name}}" />
-		<form action="" method="get">
-			<button type="submit">Favourite</button>
+		<img
+			height="150"
+			src="{{product.picture.url}}"
+			alt="{{product.name}}"
+		/>
+		<form action="{%url  'home'%}" method="post">
+			{%csrf_token%}
+			<input type="hidden" name="product_id" value="{{product.id}}" />
+			<button type="submit">
+				{% if is_fav %} Remove from favourite {% else %} Add to
+				favourite {% endif %}
+			</button>
 		</form>
-		<p>{{product.get_absolute_url}}</p>
-		<a href="{{product.get_absolute_url}}/update">Update this product</a>
+
+		<a href="{{product.get_absolute_url}}update">Update this product</a>
+		<a href="{{product.get_absolute_url}}delete">Delete this product</a>
 		<a href="/">To home</a>
 	</body>
 </html>

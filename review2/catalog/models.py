@@ -3,7 +3,7 @@ from django.utils.text import slugify
 from django.urls import reverse
 # Create your models here.
 class Category(models.Model):
-    name = models.CharField(max_length=250)
+    name = models.CharField(max_length=250, unique=True)
     
     def __str__(self):
         return self.name
@@ -14,7 +14,7 @@ class Product(models.Model):
     price = models.FloatField(blank=True)
     picture = models.ImageField(upload_to='products')
     slug = models.SlugField()
-    category = models.ForeignKey(Category,on_delete=models.CASCADE, null=True)
+    category = models.ForeignKey(Category,on_delete=models.CASCADE, null=True,related_name='products')
     
     def save(self,*args,**kwargs):
         if not self.slug:

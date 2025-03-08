@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<form action="#" method="get" id="filterForm">
+			<label for="filter">Sort by:</label>
+			<select name="filter" id="filter">
+				<optgroup label="Products">
+					<option value="name">Name</option>
+					<option value="higherPrice">Price from high to low</option>
+					<option value="price">Price from low to high</option>
+					<option value="favourites">Favourites</option>
+				</optgroup>
+				<optgroup label="Categories">
+					<option value="Game">Games</option>
+					<option value="Music">Music</option>
+				</optgroup>
+			</select>
+			<button type="submit">Filter</button>
+		</form>
+		{%include 'catalog/includes/loop.txt'%}
+
+		<br />
+		<a href="/">To Home</a>
+	</body>
+</html>

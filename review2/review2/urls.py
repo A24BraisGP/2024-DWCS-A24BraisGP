@@ -26,4 +26,7 @@ urlpatterns = [
     path('create-product/',views.CreateProduct.as_view(),name="create-product"),
     path('detail/<slug:slug>/update/',views.UpdateProduct.as_view(),name='update-product'),
     path('detail/<slug:slug>/',views.DetailProduct.as_view(),name='product-detail'),
+    path('detail/<slug:slug>/delete/',views.DeleteProductView.as_view(),name='delete-product'),
+    path('search/',views.SearchView.as_view(),name='search'),
+    
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
