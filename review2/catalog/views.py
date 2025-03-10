@@ -80,6 +80,12 @@ class SearchView(ListView):
      model = Product
      context_object_name = 'products'
      
+     def get_context_data(self, **kwargs):
+         context = super().get_context_data(**kwargs)
+         context["categories"] = Category.objects.all() 
+         return context
+     
+     
      def get_queryset(self,**kwargs):
          products = Product.objects.all()
          product_filter = self.request.GET.get('filter')
@@ -97,7 +103,7 @@ class SearchView(ListView):
             print(favourites)
             if product_filter == 'favourites':
                 if favourites is None: 
-                    products = Product.objects.all()
+                    products = []
                 else:
                     products = Product.objects.filter(id__in=favourites)
             elif product_filter not in order_by_mapping:

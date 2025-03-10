@@ -16,8 +16,9 @@
 					<option value="favourites">Favourites</option>
 				</optgroup>
 				<optgroup label="Categories">
-					<option value="Game">Games</option>
-					<option value="Music">Music</option>
+					{% for category in categories %}
+					<option value="{{category.name}}">{{category.name}}</option>
+					{% endfor %}
 				</optgroup>
 			</select>
 			<button type="submit">Filter</button>
