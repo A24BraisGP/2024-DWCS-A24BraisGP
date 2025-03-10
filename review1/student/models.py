@@ -18,7 +18,7 @@ class Student(models.Model):
     slug = models.SlugField(unique=True,blank=True)
     year_of_birth = models.IntegerField(validators=[MinValueValidator(1970),MaxValueValidator(2010)],null=True, blank=True)
     finished_degree = models.BooleanField(default=False)
-    degree = models.ForeignKey(Degree, on_delete=models.CASCADE, null=True)
+    degree = models.ForeignKey(Degree, on_delete=models.CASCADE, null=True, related_name='degrees')
     
     def get_absolute_url(self):
         return reverse("student-detail", kwargs={self.slug})
@@ -33,9 +33,11 @@ class Student(models.Model):
     
 # from student.models import Degree,Student 
 # degree = Degree.objects.get(id=1)
+# students = Student.objects.all()
 # student_older_20 = students.filter(year_of_birth__lte=2005)
-# avg_year = students.aggregate(Avg('year_of_birth'))
+# student_older_25_finished = students.filter(year_of_birth__lte=2005, finished_degree=True)
 # from django.db.models import Avg
+# avg_year = students.aggregate(Avg('year_of_birth'))
 # {'year_of_birth__avg': 2002.0}
 # avg_age = 2025 - avg_year['year_of_birth__avg']
 

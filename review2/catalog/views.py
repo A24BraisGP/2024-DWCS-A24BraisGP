@@ -93,9 +93,13 @@ class SearchView(ListView):
                 'price': 'price',
                 'higherPrice': '-price'
             }
+            favourites = self.request.session.get('favourites')
+            print(favourites)
             if product_filter == 'favourites':
-                favourites = self.request.session.get('favourites')
-                products = Product.objects.filter(id__in=favourites)
+                if favourites is None: 
+                    products = Product.objects.all()
+                else:
+                    products = Product.objects.filter(id__in=favourites)
             elif product_filter not in order_by_mapping:
                 category = Category.objects.get(name=product_filter)
                 products = category.products.all()
